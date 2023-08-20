@@ -8,11 +8,9 @@ using UnityEngine;
 public class Planet : MonoBehaviour
 {
     [SerializeField]
-    private SpriteRenderer _planetRebderer;
-    [SerializeField]
-    private GameObject _selectionIndicator;
-    [SerializeField]
-    private GameObject _planetIndicator;
+    public SpriteRenderer _planetRebderer;
+
+
     [SerializeField]
     private GameObject _shipPrefab;
     [SerializeField]
@@ -23,11 +21,13 @@ public class Planet : MonoBehaviour
     private int _numOfShips;
     [SerializeField]
     private int _shipSpwanRate;
-
-    //private List<GameObject> _selectedPlanets = new List<GameObject>();
-    private float _spwanNewShipTimer;
-    public bool _isSelected;
+   
     private int _size;
+    private float _spwanNewShipTimer;
+
+    public GameObject _selectionIndicator;
+
+
 
     private enum PlanetColor
     {
@@ -35,30 +35,10 @@ public class Planet : MonoBehaviour
         Blue,
         Nuetral // gray
     }
-    private void OnMouseEnter()
-    {
-        _planetIndicator.SetActive(true);
-
-    }
-
-    private void OnMouseExit()
-    {
-
-        if (_isSelected == true)
-        {
-            _selectionIndicator.SetActive(true);
-        }
-        else
-        {
-            _planetIndicator.SetActive(false);
-        }
-    }
 
     private void Update()
     {
         SpwanNewShipTimer();
-        PlanetSelect();
-        DeployShips();
     }
 
     void SpwanNewShipTimer()
@@ -77,7 +57,7 @@ public class Planet : MonoBehaviour
         SetPlanetColor();
         _numOfShips = 100;
         _numOfshipText.text = _numOfShips.ToString();
-        // _selectionIndicator.SetActive(false);
+
     }
     private void SetPlanetColor()
     {
@@ -95,28 +75,38 @@ public class Planet : MonoBehaviour
         }
     }
 
-    private void PlanetSelect()
+    public void DeployShips(Planet targetPlanet)
     {
-        if (Input.GetMouseButtonDown(0))
+        for (int i = 0; i < _numOfShips; i++)
         {
-            _isSelected = true;
-            _selectionIndicator.SetActive(true);
-            // _selectedPlanets.Add(gameObject);
+            Instantiate(_shipPrefab, transform.position, Quaternion.identity);
         }
+        _numOfShips = _numOfShips / 2;
+        _numOfshipText.text = _numOfShips.ToString();
     }
 
-    void DeployShips()
+
+    private void OnMouseEnter()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            for (int i = 0; i < _numOfShips; i++)
-            {
-                Instantiate(_shipPrefab, transform.position, Quaternion.identity);
-            }
-            _numOfShips = _numOfShips / 2;
-            _numOfshipText.text = _numOfShips.ToString();
-        }
+        _selectionIndicator.SetActive(true);
 
     }
 
+    private void OnMouseExit()
+    {
+        _selectionIndicator.SetActive(false);
+
+    }
+
+    public void IncreaseNumber()
+    {
+        _numOfShips++;
+        _numOfshipText.text = _numOfShips.ToString();
+    }
+
+    public void DecreaseNumber()
+    {
+        _numOfShips--;
+        _numOfshipText.text = _numOfShips.ToString();
+    }
 }
