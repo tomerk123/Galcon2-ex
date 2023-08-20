@@ -9,8 +9,6 @@ public class Planet : MonoBehaviour
 {
     [SerializeField]
     public SpriteRenderer _planetRebderer;
-
-
     [SerializeField]
     private GameObject _shipPrefab;
     [SerializeField]
@@ -18,22 +16,32 @@ public class Planet : MonoBehaviour
     [SerializeField]
     private TMPro.TextMeshPro _numOfshipText;
     [SerializeField]
-    private int _numOfShips;
+    public int _numOfShips;
     [SerializeField]
     private int _shipSpwanRate;
-   
-    private int _size;
-    private float _spwanNewShipTimer;
 
+    private PlanetState _planetState;
     public GameObject _selectionIndicator;
+    
+//    private int _size = Random.Range(1, 5);
+    private float _spwanNewShipTimer;
+    public bool _isClicked = false;
+    public bool _isFrendly = false;
+    private int _startingShips = 100;
 
 
+    public enum PlanetState
+    {
+        Friendly,
+        Enemy,
+        Neutral
+    }
 
-    private enum PlanetColor
+    public enum PlanetColor
     {
         Red,
         Blue,
-        Nuetral // gray
+        Nuetral
     }
 
     private void Update()
@@ -55,9 +63,25 @@ public class Planet : MonoBehaviour
     void Start()
     {
         SetPlanetColor();
-        _numOfShips = 100;
+        setPlanetState();
+        _numOfShips =_startingShips;
         _numOfshipText.text = _numOfShips.ToString();
+    }
 
+    private void setPlanetState()
+    {
+        switch (_planetState)
+        {
+            case PlanetState.Friendly:
+                _isFrendly = true;
+                break;
+            case PlanetState.Enemy:
+                _isFrendly = false;
+                break;
+            case PlanetState.Neutral:
+                _isFrendly = false;
+                break;
+        }
     }
     private void SetPlanetColor()
     {
@@ -89,13 +113,14 @@ public class Planet : MonoBehaviour
     private void OnMouseEnter()
     {
         _selectionIndicator.SetActive(true);
-
     }
 
     private void OnMouseExit()
     {
-        _selectionIndicator.SetActive(false);
-
+        if (!_isClicked)
+        {
+            _selectionIndicator.SetActive(false);
+        }
     }
 
     public void IncreaseNumber()

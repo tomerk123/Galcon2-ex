@@ -4,38 +4,35 @@ using UnityEngine;
 
 public class SpaceShip : MonoBehaviour
 {
-    [SerializeField] private float _speed;
-    [SerializeField] GameObject destinationPlanet;
-    float arrivalDistance = 0.1f;
+    private Planet _planet;
+    [SerializeField] private float _speed = 5f;
+    [SerializeField]private  GameObject destinationPlanet;
+
 
 
     private void Update()
     {
-        if (destinationPlanet != null)
-        {
-            
-            transform.position = Vector3.MoveTowards(transform.position, destinationPlanet.transform.position, Time.deltaTime * _speed);
-            if (Vector3.Distance(transform.position, destinationPlanet.transform.position) < arrivalDistance)
-            {
-                HandleArrival();
-            }
-        }
+       
     }
 
-    private void HandleArrival()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (destinationPlanet.CompareTag("FriendlyPlanet"))
-        {
-            destinationPlanet.GetComponent<Planet>().IncreaseNumber();
-        }
-        else if (destinationPlanet.CompareTag("EnemyPlanet") || destinationPlanet.CompareTag("NeutralPlanet"))
-        {
-            destinationPlanet.GetComponent<Planet>().DecreaseNumber();
-        }
 
-        Destroy(gameObject);
+        if (other.gameObject.tag == "FriendlyPlanet")
+        {
+            Destroy(gameObject);
+            _planet.IncreaseNumber();
+        }
+        else if (other.gameObject.tag == "EnemyPlanet" && _planet._numOfShips > 0)
+        {
+            Destroy(gameObject);
+            _planet.DecreaseNumber();
+        }
+        else if (other.gameObject.tag == "NeutralPlanet" && _planet._numOfShips > 0)
+        {
+            Destroy(gameObject);
+            _planet.DecreaseNumber();
+        }
     }
-
-
 
 }

@@ -15,7 +15,6 @@ public class Inputs : MonoBehaviour
 
     }
 
-
     private void PlanetSelect()
     {
         if (Input.GetMouseButtonDown(0))
@@ -26,6 +25,16 @@ public class Inputs : MonoBehaviour
             {
                 _selectedPlanets.Add(ClickedObject);
                 ClickedObject._selectionIndicator.SetActive(true);
+                ClickedObject._isClicked = true;
+            }
+            else if (ClickedObject == null)
+            {
+                foreach (Planet planet in _selectedPlanets)
+                {
+                    planet._selectionIndicator.SetActive(false);
+                    planet._isClicked = false;
+                }
+                _selectedPlanets.Clear();
             }
         }
     }
@@ -56,7 +65,5 @@ public class Inputs : MonoBehaviour
         PlanetSelect();
         Attack();
     }
-
-
 }
 
