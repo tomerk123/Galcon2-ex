@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class Inputs : MonoBehaviour
 {
@@ -14,56 +15,51 @@ public class Inputs : MonoBehaviour
     {
 
     }
-
-    private void PlanetSelect()
+    private void Update()
     {
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
         if (Input.GetMouseButtonDown(0))
         {
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             Planet ClickedObject = (hit.collider != null) ? hit.collider.gameObject.GetComponent<Planet>() : null;
             if (ClickedObject != null)
             {
                 _selectedPlanets.Add(ClickedObject);
-                ClickedObject._selectionIndicator.SetActive(true);
+                ClickedObject.SelectionIndicator.SetActive(true);
                 ClickedObject._isClicked = true;
             }
             else if (ClickedObject == null)
             {
                 foreach (Planet planet in _selectedPlanets)
                 {
-                    planet._selectionIndicator.SetActive(false);
+                    planet.SelectionIndicator.SetActive(false);
                     planet._isClicked = false;
+                }
+
+            }
+        }
+        Debug.Log(_selectedPlanets.Count);
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (hit.collider.tag == "EnemyPlanet")
+            {
+                Debug.Log("EnemyPlanet");
+                if (_selectedPlanets.Count > 0)
+                {
+                    GameObject enemyPlanet = hit.collider.gameObject;
+                    foreach (Planet planet in _selectedPlanets)
+                    {
+                        planet._shipPrefab.GetComponent<SpaceShip>()._targetPlanet = enemyPlanet;
+                        planet.DeployShips();
+                    }
+
                 }
                 _selectedPlanets.Clear();
             }
+
         }
     }
 
-    void Attack()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (_selectedPlanets.Count > 0)
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit))
-                {
-                    if (hit.collider.gameObject.GetComponent<Planet>() != null)
-                    {
-                        Planet targetPlanet = hit.collider.gameObject.GetComponent<Planet>();
-                        foreach (Planet planet in _selectedPlanets)
-                        {
-                            _planet.DeployShips(targetPlanet);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    private void Update()
-    {
-        PlanetSelect();
-        Attack();
-    }
+
+
 }
 

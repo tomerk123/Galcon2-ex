@@ -326,11 +326,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 350232635, guid: d6acc268ae58595478001fe0c355006c, type: 3}
       propertyPath: m_fontSize
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 350232635, guid: d6acc268ae58595478001fe0c355006c, type: 3}
       propertyPath: m_fontSizeBase
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1068049803, guid: d6acc268ae58595478001fe0c355006c, type: 3}
       propertyPath: m_Color.a
@@ -405,6 +405,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1902139259643484215, guid: d6acc268ae58595478001fe0c355006c, type: 3}
+      propertyPath: _planetState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902139259643484215, guid: d6acc268ae58595478001fe0c355006c, type: 3}
       propertyPath: _numOfshipText
       value: 
       objectReference: {fileID: 350232635}
@@ -412,6 +416,10 @@ PrefabInstance:
       propertyPath: _shipSpwanRate
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1902139259643484215, guid: d6acc268ae58595478001fe0c355006c, type: 3}
+      propertyPath: SelectionIndicator
+      value: 
+      objectReference: {fileID: 486067493}
     - target: {fileID: 1902139259643484215, guid: d6acc268ae58595478001fe0c355006c, type: 3}
       propertyPath: _selectionIndicator
       value: 
@@ -538,11 +546,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 350232635, guid: d6acc268ae58595478001fe0c355006c, type: 3}
       propertyPath: m_fontSize
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 350232635, guid: d6acc268ae58595478001fe0c355006c, type: 3}
       propertyPath: m_fontSizeBase
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1068049803, guid: d6acc268ae58595478001fe0c355006c, type: 3}
       propertyPath: m_Color.a
@@ -609,6 +617,10 @@ PrefabInstance:
       value: Planet (1)
       objectReference: {fileID: 0}
     - target: {fileID: 1902139259643484215, guid: d6acc268ae58595478001fe0c355006c, type: 3}
+      propertyPath: SelectionIndicator
+      value: 
+      objectReference: {fileID: 1068049802}
+    - target: {fileID: 1902139259643484215, guid: d6acc268ae58595478001fe0c355006c, type: 3}
       propertyPath: _selectionIndicator
       value: 
       objectReference: {fileID: 1068049802}
@@ -657,11 +669,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 350232635, guid: d6acc268ae58595478001fe0c355006c, type: 3}
       propertyPath: m_fontSize
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 350232635, guid: d6acc268ae58595478001fe0c355006c, type: 3}
       propertyPath: m_fontSizeBase
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1068049803, guid: d6acc268ae58595478001fe0c355006c, type: 3}
       propertyPath: m_Color.a
@@ -740,6 +752,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1902139259643484215, guid: d6acc268ae58595478001fe0c355006c, type: 3}
+      propertyPath: _planetState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1902139259643484215, guid: d6acc268ae58595478001fe0c355006c, type: 3}
       propertyPath: _numOfshipText
       value: 
       objectReference: {fileID: 906878498}
@@ -751,6 +767,10 @@ PrefabInstance:
       propertyPath: _planetRebderer
       value: 
       objectReference: {fileID: 362144879}
+    - target: {fileID: 1902139259643484215, guid: d6acc268ae58595478001fe0c355006c, type: 3}
+      propertyPath: SelectionIndicator
+      value: 
+      objectReference: {fileID: 1838127042}
     - target: {fileID: 1902139259643484215, guid: d6acc268ae58595478001fe0c355006c, type: 3}
       propertyPath: _selectionIndicator
       value: 

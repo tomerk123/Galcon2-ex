@@ -9,8 +9,9 @@ public class Planet : MonoBehaviour
 {
     [SerializeField]
     public SpriteRenderer _planetRebderer;
+
     [SerializeField]
-    private GameObject _shipPrefab;
+    public GameObject _shipPrefab;
     [SerializeField]
     private PlanetColor _planetColor;
     [SerializeField]
@@ -18,16 +19,21 @@ public class Planet : MonoBehaviour
     [SerializeField]
     public int _numOfShips;
     [SerializeField]
-    private int _shipSpwanRate;
-
-    private PlanetState _planetState;
-    public GameObject _selectionIndicator;
+    private float _shipSpwanRate;
+    [SerializeField]
+    private Vector3 spawnPosition;
     
-//    private int _size = Random.Range(1, 5);
+
+
+    public PlanetState _planetState;
+    public GameObject SelectionIndicator;
+
+    
     private float _spwanNewShipTimer;
     public bool _isClicked = false;
     public bool _isFrendly = false;
     private int _startingShips = 100;
+    private float _size;
 
 
     public enum PlanetState
@@ -46,7 +52,8 @@ public class Planet : MonoBehaviour
 
     private void Update()
     {
-        SpwanNewShipTimer();
+        if (_planetState == PlanetState.Friendly || _planetState == PlanetState.Enemy)
+            SpwanNewShipTimer();
     }
 
     void SpwanNewShipTimer()
@@ -62,65 +69,71 @@ public class Planet : MonoBehaviour
 
     void Start()
     {
-        SetPlanetColor();
-        setPlanetState();
-        _numOfShips =_startingShips;
+        _size = GetComponent<Transform>().localScale.x;
+        _shipSpwanRate /= _size;
+        SetPlanetVisuals();
+        if(_planetState == PlanetState.Friendly)
+        {
+        _numOfShips = _startingShips;
         _numOfshipText.text = _numOfShips.ToString();
+        }
     }
 
-    private void setPlanetState()
+    public void SetPlanetVisuals()
     {
         switch (_planetState)
         {
-            case PlanetState.Friendly:
-                _isFrendly = true;
-                break;
             case PlanetState.Enemy:
-                _isFrendly = false;
+                _planetRebderer.material.color = Color.red;
+                this.gameObject.tag = "EnemyPlanet";
+                _planetState = PlanetState.Enemy; // Set state to enemy for enemy planets
+                break;
+            case PlanetState.Friendly:
+                _planetRebderer.material.color = Color.blue;
+                this.gameObject.tag = "FriendlyPlanet";
+                _planetState = PlanetState.Friendly; // Set state to friendly for friendly planets
                 break;
             case PlanetState.Neutral:
-                _isFrendly = false;
-                break;
-        }
-    }
-    private void SetPlanetColor()
-    {
-        switch (_planetColor)
-        {
-            case PlanetColor.Red:
-                _planetRebderer.material.color = Color.red;
-                break;
-            case PlanetColor.Blue:
-                _planetRebderer.material.color = Color.blue;
-                break;
-            case PlanetColor.Nuetral:
                 _planetRebderer.material.color = Color.gray;
+                this.gameObject.tag = "NeutralPlanet";
+                _planetState = PlanetState.Neutral; // Set state to neutral for neutral planets
+                break;
+            default:
                 break;
         }
     }
 
-    public void DeployShips(Planet targetPlanet)
+
+    public void DeployShips()
     {
-        for (int i = 0; i < _numOfShips; i++)
-        {
-            Instantiate(_shipPrefab, transform.position, Quaternion.identity);
-        }
         _numOfShips = _numOfShips / 2;
         _numOfshipText.text = _numOfShips.ToString();
+        for (int i = 0; i < _numOfShips; i++)
+        {
+            Instantiate(_shipPrefab, spawnPosition, Quaternion.identity);
+        }
     }
 
 
     private void OnMouseEnter()
     {
-        _selectionIndicator.SetActive(true);
+        SelectionIndicator.SetActive(true);
     }
 
     private void OnMouseExit()
     {
         if (!_isClicked)
         {
-            _selectionIndicator.SetActive(false);
+            SelectionIndicator.SetActive(false);
         }
+    }
+
+
+
+    public void SetPlanetState()
+    {
+        _planetState = PlanetState.Friendly;
+        SetPlanetVisuals();
     }
 
     public void IncreaseNumber()
@@ -134,4 +147,5 @@ public class Planet : MonoBehaviour
         _numOfShips--;
         _numOfshipText.text = _numOfShips.ToString();
     }
+
 }
