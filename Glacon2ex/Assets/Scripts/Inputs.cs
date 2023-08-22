@@ -7,7 +7,7 @@ using Debug = UnityEngine.Debug;
 
 public class Inputs : MonoBehaviour
 {
-    private Planet _planet;
+   
     private List<Planet> _selectedPlanets = new List<Planet>();
 
 
@@ -21,7 +21,7 @@ public class Inputs : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Planet ClickedObject = (hit.collider != null) ? hit.collider.gameObject.GetComponent<Planet>() : null;
-            if (ClickedObject != null)
+            if (ClickedObject != null && ClickedObject.CompareTag("FriendlyPlanet"))
             {
                 _selectedPlanets.Add(ClickedObject);
                 ClickedObject.SelectionIndicator.SetActive(true);
@@ -40,22 +40,22 @@ public class Inputs : MonoBehaviour
         Debug.Log(_selectedPlanets.Count);
         if (Input.GetMouseButtonDown(1))
         {
-            if (hit.collider.tag == "EnemyPlanet")
+            if (hit.collider.tag == "EnemyPlanet" || hit.collider.tag == "NeutralPlanet" || hit.collider.tag == "FriendlyPlanet")
             {
-                Debug.Log("EnemyPlanet");
+                
                 if (_selectedPlanets.Count > 0)
                 {
-                    GameObject enemyPlanet = hit.collider.gameObject;
+                    Planet enemyPlanet = hit.collider.gameObject.GetComponent<Planet>();
                     foreach (Planet planet in _selectedPlanets)
                     {
-                        planet._shipPrefab.GetComponent<SpaceShip>()._targetPlanet = enemyPlanet;
-                        planet.DeployShips();
+                        
+                        planet.DeployShips(enemyPlanet);
                     }
 
                 }
                 _selectedPlanets.Clear();
+           
             }
-
         }
     }
 

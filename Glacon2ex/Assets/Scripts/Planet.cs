@@ -9,9 +9,7 @@ public class Planet : MonoBehaviour
 {
     [SerializeField]
     public SpriteRenderer _planetRebderer;
-
-    [SerializeField]
-    public GameObject _shipPrefab;
+    
     [SerializeField]
     private PlanetColor _planetColor;
     [SerializeField]
@@ -21,17 +19,19 @@ public class Planet : MonoBehaviour
     [SerializeField]
     private float _shipSpwanRate;
     [SerializeField]
-    private Vector3 spawnPosition;
+    private Transform _spawnPosition;
     
 
 
     public PlanetState _planetState;
     public GameObject SelectionIndicator;
+    public GameObject _shipPrefab;
+    public bool _isClicked = false;
+    public bool _isFrendly = false;
 
     
     private float _spwanNewShipTimer;
-    public bool _isClicked = false;
-    public bool _isFrendly = false;
+    
     private int _startingShips = 100;
     private float _size;
 
@@ -72,11 +72,10 @@ public class Planet : MonoBehaviour
         _size = GetComponent<Transform>().localScale.x;
         _shipSpwanRate /= _size;
         SetPlanetVisuals();
-        if(_planetState == PlanetState.Friendly)
-        {
+        
         _numOfShips = _startingShips;
         _numOfshipText.text = _numOfShips.ToString();
-        }
+        
     }
 
     public void SetPlanetVisuals()
@@ -104,13 +103,15 @@ public class Planet : MonoBehaviour
     }
 
 
-    public void DeployShips()
+    public void DeployShips(Planet targetPlanet)
     {
+        
         _numOfShips = _numOfShips / 2;
         _numOfshipText.text = _numOfShips.ToString();
         for (int i = 0; i < _numOfShips; i++)
         {
-            Instantiate(_shipPrefab, spawnPosition, Quaternion.identity);
+            GameObject Ship = Instantiate(_shipPrefab, _spawnPosition.position, Quaternion.identity);
+            Ship.GetComponent<SpaceShip>()._targetPlanet = targetPlanet;
         }
     }
 
@@ -147,5 +148,4 @@ public class Planet : MonoBehaviour
         _numOfShips--;
         _numOfshipText.text = _numOfShips.ToString();
     }
-
 }

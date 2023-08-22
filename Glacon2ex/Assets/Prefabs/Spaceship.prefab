@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetPlanet: {fileID: 0}
-  _speed: 2
+  _speed: 6.5
 --- !u!50 &4089175439775812903
 Rigidbody2D:
   serializedVersion: 4
