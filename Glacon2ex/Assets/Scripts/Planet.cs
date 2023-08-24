@@ -26,6 +26,7 @@ public class Planet : MonoBehaviour
     public PlanetState _planetState;
     public GameObject SelectionIndicator;
     public GameObject _shipPrefab;
+    public GameObject _EnemyShip;
     public bool _isClicked = false;
     public bool _isFrendly = false;
 
@@ -53,7 +54,9 @@ public class Planet : MonoBehaviour
     private void Update()
     {
         if (_planetState == PlanetState.Friendly || _planetState == PlanetState.Enemy)
+        {
             SpwanNewShipTimer();
+        }
     }
 
     void SpwanNewShipTimer()
@@ -71,14 +74,12 @@ public class Planet : MonoBehaviour
     {
         _size = GetComponent<Transform>().localScale.x;
         _shipSpwanRate /= _size;
-        SetPlanetVisuals();
-        
         _numOfShips = _startingShips;
         _numOfshipText.text = _numOfShips.ToString();
         
     }
 
-    public void SetPlanetVisuals()
+    public void SetPlanetVisuals(PlanetState state)
     {
         switch (_planetState)
         {
@@ -134,7 +135,7 @@ public class Planet : MonoBehaviour
     public void SetPlanetState()
     {
         _planetState = PlanetState.Friendly;
-        SetPlanetVisuals();
+        SetPlanetVisuals(PlanetState.Friendly);
     }
 
     public void IncreaseNumber()
@@ -147,5 +148,27 @@ public class Planet : MonoBehaviour
     {
         _numOfShips--;
         _numOfshipText.text = _numOfShips.ToString();
+    }
+
+    public bool isFrendly()
+    {
+        return _planetState == PlanetState.Friendly;
+    }
+
+     public bool isEnemy()
+    {
+        return _planetState == PlanetState.Enemy;
+    }
+
+     public bool isNuetral()
+    {
+        return _planetState == PlanetState.Neutral;
+    }
+
+
+    public void Init()
+    {
+        _planetState = PlanetState.Neutral;
+        SetPlanetVisuals(PlanetState.Neutral);
     }
 }

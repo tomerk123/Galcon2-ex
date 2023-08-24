@@ -18,7 +18,6 @@ public class EnemyShip : MonoBehaviour
         Planet collided = other.GetComponent<Planet>();
         if (other.gameObject.tag == "EnemyPlanet" && collided == _targetPlanet)
         {
-
             _targetPlanet.IncreaseNumber();
         }
         else if (other.gameObject.tag == "FriendlyPlanet" && collided == _targetPlanet)
@@ -43,5 +42,5 @@ public class EnemyShip : MonoBehaviour
         Destroy(gameObject);
     }
 
-
+    
 }

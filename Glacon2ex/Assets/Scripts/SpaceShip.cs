@@ -20,12 +20,12 @@ public class SpaceShip : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Planet collided = other.GetComponent<Planet>();
-        if (other.gameObject.tag == "FriendlyPlanet" && collided == _targetPlanet)
+        if (_targetPlanet.isFrendly() && collided == _targetPlanet)
         {
             Destroy(gameObject);
             _targetPlanet.IncreaseNumber();
         }
-        else if (other.gameObject.tag == "EnemyPlanet" && collided == _targetPlanet)
+        else if (_targetPlanet.isEnemy() && collided == _targetPlanet)
         {
             Destroy(gameObject);
             _targetPlanet.DecreaseNumber();
@@ -35,7 +35,7 @@ public class SpaceShip : MonoBehaviour
                 _targetPlanet.SetPlanetState();
             }
         }
-        else if (other.gameObject.tag == "NeutralPlanet")
+        else if (_targetPlanet.isNuetral() && collided == _targetPlanet)
         {
             Destroy(gameObject);
             _targetPlanet.DecreaseNumber();
