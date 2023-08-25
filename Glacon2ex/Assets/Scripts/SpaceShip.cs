@@ -32,7 +32,7 @@ public class SpaceShip : MonoBehaviour
             if (_targetPlanet._numOfShips <= 0)
             {
                 _targetPlanet._numOfShips = 0;
-                _targetPlanet.SetPlanetState();
+                _targetPlanet.SetPlanetFriendlyState();
             }
         }
         else if (_targetPlanet.isNuetral() && collided == _targetPlanet)
@@ -41,7 +41,7 @@ public class SpaceShip : MonoBehaviour
             _targetPlanet.DecreaseNumber();
             if (_targetPlanet._numOfShips <= 0)
             {
-                _targetPlanet.SetPlanetState();
+                _targetPlanet.SetPlanetFriendlyState();
             }
         }
         

@@ -27,7 +27,7 @@ public class EnemyShip : MonoBehaviour
             if (_targetPlanet._numOfShips <= 0)
             {
                 _targetPlanet._numOfShips = 0;
-                _targetPlanet.SetPlanetState();
+                _targetPlanet.SetPlanetFriendlyState();
             }
         }
         else if (other.gameObject.tag == "NeutralPlanet")
@@ -36,7 +36,7 @@ public class EnemyShip : MonoBehaviour
             _targetPlanet.DecreaseNumber();
             if (_targetPlanet._numOfShips <= 0)
             {
-                _targetPlanet.SetPlanetState();
+                _targetPlanet.SetPlanetFriendlyState();
             }
         }
         Destroy(gameObject);

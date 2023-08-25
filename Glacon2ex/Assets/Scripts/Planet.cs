@@ -79,7 +79,7 @@ public class Planet : MonoBehaviour
         
     }
 
-    public void SetPlanetVisuals(PlanetState state)
+    public void SetPlanetVisuals()
     {
         switch (_planetState)
         {
@@ -132,10 +132,9 @@ public class Planet : MonoBehaviour
 
 
 
-    public void SetPlanetState()
+    public void SetPlanetFriendlyState()
     {
         _planetState = PlanetState.Friendly;
-        SetPlanetVisuals(PlanetState.Friendly);
     }
 
     public void IncreaseNumber()
@@ -165,10 +164,4 @@ public class Planet : MonoBehaviour
         return _planetState == PlanetState.Neutral;
     }
 
-
-    public void Init()
-    {
-        _planetState = PlanetState.Neutral;
-        SetPlanetVisuals(PlanetState.Neutral);
-    }
 }
