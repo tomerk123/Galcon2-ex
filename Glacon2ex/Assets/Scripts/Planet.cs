@@ -53,7 +53,7 @@ public class Planet : MonoBehaviour
 
     private void Update()
     {
-        if (_planetState == PlanetState.Friendly || _planetState == PlanetState.Enemy)
+        if (_planetState == PlanetState.Friendly)
         {
             SpwanNewShipTimer();
         }
@@ -135,6 +135,7 @@ public class Planet : MonoBehaviour
     public void SetPlanetFriendlyState()
     {
         _planetState = PlanetState.Friendly;
+        SetPlanetVisuals();
     }
 
     public void IncreaseNumber()

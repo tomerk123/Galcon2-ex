@@ -19,7 +19,7 @@ public class PlanetController : MonoBehaviour
     void Start()
     {
         InstantiateNuetralPlanets();
-        InstantiateFriendlyPlanet();
+        InstantiateEnemyPlanet();
         InstantiateFriendlyPlanet();
     }
 
