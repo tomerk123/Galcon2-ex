@@ -7,8 +7,9 @@ using Debug = UnityEngine.Debug;
 
 public class Inputs : MonoBehaviour
 {
-   
+
     private List<Planet> _selectedPlanets = new List<Planet>();
+    private Planet _planet;
 
 
     private void Start()
@@ -34,27 +35,32 @@ public class Inputs : MonoBehaviour
                     planet.SelectionIndicator.SetActive(false);
                     planet._isClicked = false;
                 }
-
             }
         }
-        Debug.Log(_selectedPlanets.Count);
+
+        if (hit.collider == null)
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(1))
         {
+
             if (hit.collider.tag == "EnemyPlanet" || hit.collider.tag == "NeutralPlanet" || hit.collider.tag == "FriendlyPlanet")
             {
-                
+
                 if (_selectedPlanets.Count > 0)
                 {
                     Planet enemyPlanet = hit.collider.gameObject.GetComponent<Planet>();
                     foreach (Planet planet in _selectedPlanets)
                     {
-                        
+
                         planet.DeployShips(enemyPlanet);
                     }
 
                 }
                 _selectedPlanets.Clear();
-           
+
             }
         }
     }

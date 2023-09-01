@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 7089945649475811857}
   - component: {fileID: 1902139259643484215}
   - component: {fileID: 7069908393358992921}
+  - component: {fileID: 3298123793586504578}
   m_Layer: 0
   m_Name: Planet
   m_TagString: Untagged
@@ -389,15 +390,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _planetRebderer: {fileID: 7089945649475811857}
-  _shipPrefab: {fileID: 1803635577123804558, guid: 16cbbdb988d42df448999fcc41db098d, type: 3}
-  _enemyShipPrefab: {fileID: 0}
-  _planetColor: 1
   _numOfshipText: {fileID: 350232635}
   _numOfShips: 0
   _shipSpwanRate: 3
   _spawnPosition: {fileID: 7675404446657856131}
   _planetState: 2
   SelectionIndicator: {fileID: 1068049802}
+  _shipPrefab: {fileID: 1803635577123804558, guid: 16cbbdb988d42df448999fcc41db098d, type: 3}
   _isClicked: 0
   _isFrendly: 0
 --- !u!58 &7069908393358992921
@@ -416,3 +415,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &3298123793586504578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664891226103761405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fc627f61ffc6d44e88fb9f4c05e4e5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnInterval: 5
+  timeSinceLastSpawn: 0
+  _EnemyShip: {fileID: 6550859028907886413, guid: 6a7caa4a5a0e6f04781ce0763904f064, type: 3}
+  _spawnPosition: {fileID: 7675404446657856131}

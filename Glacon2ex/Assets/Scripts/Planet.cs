@@ -9,33 +9,27 @@ public class Planet : MonoBehaviour
 {
     [SerializeField]
     public SpriteRenderer _planetRebderer;
-    
+
     [SerializeField]
-    private PlanetColor _planetColor;
-    [SerializeField]
-    private TMPro.TextMeshPro _numOfshipText;
+    public TMPro.TextMeshPro _numOfshipText;
     [SerializeField]
     public int _numOfShips;
     [SerializeField]
     private float _shipSpwanRate;
     [SerializeField]
     private Transform _spawnPosition;
-    
-
 
     public PlanetState _planetState;
     public GameObject SelectionIndicator;
     public GameObject _shipPrefab;
-    public GameObject _EnemyShip;
+    
     public bool _isClicked = false;
     public bool _isFrendly = false;
 
-    
     private float _spwanNewShipTimer;
-    
+
     private int _startingShips = 100;
     private float _size;
-
 
     public enum PlanetState
     {
@@ -53,10 +47,7 @@ public class Planet : MonoBehaviour
 
     private void Update()
     {
-        if (_planetState == PlanetState.Friendly)
-        {
-            SpwanNewShipTimer();
-        }
+        ShipSpwanUpdate();
     }
 
     void SpwanNewShipTimer()
@@ -72,11 +63,7 @@ public class Planet : MonoBehaviour
 
     void Start()
     {
-        _size = GetComponent<Transform>().localScale.x;
-        _shipSpwanRate /= _size;
-        _numOfShips = _startingShips;
-        _numOfshipText.text = _numOfShips.ToString();
-        
+        ShipUpdate();
     }
 
     public void SetPlanetVisuals()
@@ -103,10 +90,27 @@ public class Planet : MonoBehaviour
         }
     }
 
+    void ShipUpdate()
+    {
+        if (isFrendly() || isEnemy())
+        {
+            _size = GetComponent<Transform>().localScale.x;
+            _shipSpwanRate /= _size;
+            _numOfShips = _startingShips;
+            _numOfshipText.text = _numOfShips.ToString();
+        }
+        else
+        {
+            _numOfShips = Random.Range(10, 50);
+            _numOfshipText.text = _numOfShips.ToString();
+        }
+
+    }
+
 
     public void DeployShips(Planet targetPlanet)
     {
-        
+
         _numOfShips = _numOfShips / 2;
         _numOfshipText.text = _numOfShips.ToString();
         for (int i = 0; i < _numOfShips; i++)
@@ -115,7 +119,6 @@ public class Planet : MonoBehaviour
             Ship.GetComponent<SpaceShip>()._targetPlanet = targetPlanet;
         }
     }
-
 
     private void OnMouseEnter()
     {
@@ -130,13 +133,17 @@ public class Planet : MonoBehaviour
         }
     }
 
-
-
     public void SetPlanetFriendlyState()
     {
         _planetState = PlanetState.Friendly;
         SetPlanetVisuals();
     }
+
+     public void SetPlanetEnemyState()
+     {
+      _planetState = PlanetState.Enemy;
+      SetPlanetVisuals();
+     }
 
     public void IncreaseNumber()
     {
@@ -155,14 +162,21 @@ public class Planet : MonoBehaviour
         return _planetState == PlanetState.Friendly;
     }
 
-     public bool isEnemy()
+    public bool isEnemy()
     {
         return _planetState == PlanetState.Enemy;
     }
 
-     public bool isNuetral()
+    public bool isNuetral()
     {
         return _planetState == PlanetState.Neutral;
     }
 
+    void ShipSpwanUpdate()
+    {
+        if (_planetState == PlanetState.Friendly || _planetState == PlanetState.Enemy)
+        {
+            SpwanNewShipTimer();
+        }
+    }
 }

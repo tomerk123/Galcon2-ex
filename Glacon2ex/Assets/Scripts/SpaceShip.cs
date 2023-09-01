@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpaceShip : MonoBehaviour
 {
     public Planet _targetPlanet;
+    
     [SerializeField] private float _speed = 8f;
 
 
@@ -33,18 +34,21 @@ public class SpaceShip : MonoBehaviour
             {
                 _targetPlanet._numOfShips = 0;
                 _targetPlanet.SetPlanetFriendlyState();
+               PlanetController.Instance._freindlylPlanets.Add(_targetPlanet);
             }
         }
         else if (_targetPlanet.isNuetral() && collided == _targetPlanet)
         {
+
             Destroy(gameObject);
             _targetPlanet.DecreaseNumber();
             if (_targetPlanet._numOfShips <= 0)
             {
                 _targetPlanet.SetPlanetFriendlyState();
+                PlanetController.Instance._freindlylPlanets.Add(_targetPlanet);
             }
         }
-        
+
     }
 
 
