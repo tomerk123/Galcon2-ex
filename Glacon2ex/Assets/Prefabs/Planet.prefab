@@ -389,16 +389,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ec39b8b9e057142a218ea1f1f9edbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _planetRebderer: {fileID: 7089945649475811857}
   _numOfshipText: {fileID: 350232635}
   _numOfShips: 0
   _shipSpwanRate: 3
   _spawnPosition: {fileID: 7675404446657856131}
+  _shipPrefab: {fileID: -5135205141277966637, guid: 16cbbdb988d42df448999fcc41db098d, type: 3}
   _planetState: 2
+  _planetColor: {r: 0, g: 0, b: 0, a: 0}
   SelectionIndicator: {fileID: 1068049802}
-  _shipPrefab: {fileID: 1803635577123804558, guid: 16cbbdb988d42df448999fcc41db098d, type: 3}
   _isClicked: 0
-  _isFrendly: 0
 --- !u!58 &7069908393358992921
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -429,5 +428,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnInterval: 5
   timeSinceLastSpawn: 0
-  _EnemyShip: {fileID: 6550859028907886413, guid: 6a7caa4a5a0e6f04781ce0763904f064, type: 3}
+  _spaceShipPrefab: {fileID: -5135205141277966637, guid: 16cbbdb988d42df448999fcc41db098d, type: 3}
   _spawnPosition: {fileID: 7675404446657856131}

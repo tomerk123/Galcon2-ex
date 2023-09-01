@@ -13,8 +13,6 @@ public enum PlanetState
 
 public class Planet : MonoBehaviour
 {
-
-
     [SerializeField]
     public TMPro.TextMeshPro _numOfshipText;
     [SerializeField]
@@ -23,20 +21,14 @@ public class Planet : MonoBehaviour
     private float _shipSpwanRate;
     [SerializeField]
     private Transform _spawnPosition;
+    [SerializeField]
+    private SpaceShip _shipPrefab;
 
-    private PlanetState _planetState;
-    private SpriteRenderer _planetRebderer;
-
-
-
-    // CR: 1. These don't need to be public - make them [SerializeField] private.
-    //     2. Keep the prefab as 'SpaceShip' instead of 'GameObject', so you don't have to call GetComponent later.
-    //        [SerializeField] private SpaceShip _shipPrefab;
-
+    public PlanetState _planetState;
+    public Color _planetColor;
+    private SpriteRenderer _spriteRenderer;
 
     public GameObject SelectionIndicator;
-    public SpaceShip _shipPrefab;
-
     public bool _isClicked = false;
     private float _spwanNewShipTimer;
 
@@ -60,12 +52,17 @@ public class Planet : MonoBehaviour
         }
     }
 
+    void Awake()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     void Start()
     {
 
         ShipUpdate();
 
-        _size = transform.localScale.x; // CR: just 'transform.localScale.x', no need to GetComponent.
+        _size = transform.localScale.x;
         _shipSpwanRate /= _size;
         _numOfShips = _startingShips;
         _numOfshipText.text = _numOfShips.ToString();
@@ -89,8 +86,6 @@ public class Planet : MonoBehaviour
         }
 
     }
-
-
     public void DeployShips(Planet targetPlanet)
     {
 
@@ -98,8 +93,6 @@ public class Planet : MonoBehaviour
         _numOfshipText.text = _numOfShips.ToString();
         for (int i = 0; i < _numOfShips; i++)
         {
-            // CR: if your prefab is 'SpaceShip' instead of 'GameObject', you can skip the 'GetComponent' call:
-            //    SpaceShip ship = Instantiate<SpaceShip>(...);
             SpaceShip Ship = Instantiate(_shipPrefab, _spawnPosition.position, Quaternion.identity);
             Ship.GetComponent<SpaceShip>()._targetPlanet = targetPlanet;
         }
@@ -118,8 +111,6 @@ public class Planet : MonoBehaviour
         }
     }
 
-
-
     public void IncreaseNumber()
     {
         _numOfShips++;
@@ -132,14 +123,8 @@ public class Planet : MonoBehaviour
         _numOfshipText.text = _numOfShips.ToString();
     }
 
-    // CR: great! I suggest using a readonly-property for function without parameters *that don't change object state*.
-    //     public bool isFriendly => _planetState == PlanetState.Friendly;
     public bool isFrendly => _planetState == PlanetState.Friendly;
-
-
     public bool isEnemy => _planetState == PlanetState.Enemy;
-
-
     public bool isNuetral => _planetState == PlanetState.Neutral;
 
 
@@ -151,37 +136,44 @@ public class Planet : MonoBehaviour
         }
     }
 
-    public void SetPlanetVisuals()
+    public void SetPlanetSettings(PlanetState planetState)
     {
+
         switch (_planetState)
         {
             case PlanetState.Enemy:
-                _planetRebderer.material.color = Color.red;
-                _planetState = PlanetState.Enemy; // Set state to enemy for enemy planets
+                _planetState = PlanetState.Enemy;
+                _planetColor = Color.red;
+                _spriteRenderer.color = _planetColor;
+                tag = "EnemyPlanet";
+                // Set state to enemy for enemy planets
                 break;
             case PlanetState.Friendly:
-                _planetRebderer.material.color = Color.blue;
-                _planetState = PlanetState.Friendly; // Set state to friendly for friendly planets
+                _planetState = PlanetState.Friendly;
+                _planetColor = Color.blue;
+                _spriteRenderer.color = _planetColor;
+                tag = "FriendlyPlanet";
+                // Set state to friendly for friendly planets
                 break;
             case PlanetState.Neutral:
-                _planetRebderer.material.color = Color.gray;
-                _planetState = PlanetState.Neutral; // Set state to neutral for neutral planets
-                break;
-            default:
+                _planetState = PlanetState.Neutral;
+                _planetColor = Color.gray;
+                _spriteRenderer.color = _planetColor;
+                tag = "NeutralPlanet";
+                // Set state to neutral for neutral planets
                 break;
         }
     }
 
-
     public void SetPlanetFriendlyState()
     {
         _planetState = PlanetState.Friendly;
-        SetPlanetVisuals();
+        SetPlanetSettings(PlanetState.Friendly);
     }
 
-     public void SetPlanetEnemyState()
-     {
-      _planetState = PlanetState.Enemy;
-      SetPlanetVisuals();
-     }
+    public void SetPlanetEnemyState()
+    {
+        _planetState = PlanetState.Enemy;
+        SetPlanetSettings(PlanetState.Enemy);
+    }
 }

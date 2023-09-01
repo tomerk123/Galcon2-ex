@@ -21,8 +21,10 @@ using UnityEngine;
 //     To differentiate between those cases, add a PlanetColor so you can tell if it is friendly/enemy/neutral.
 public class SpaceShip : MonoBehaviour
 {
+
     public Planet _targetPlanet;
-    
+    public SpriteRenderer _spriteRenderer;
+
     [SerializeField] private float _speed = 8f;
 
     private void Update()
@@ -47,7 +49,7 @@ public class SpaceShip : MonoBehaviour
             {
                 _targetPlanet._numOfShips = 0;
                 _targetPlanet.SetPlanetFriendlyState();
-               PlanetController.Instance._freindlylPlanets.Add(_targetPlanet);
+              
             }
         }
         else if (_targetPlanet.isNuetral && collided == _targetPlanet)
@@ -58,11 +60,9 @@ public class SpaceShip : MonoBehaviour
             if (_targetPlanet._numOfShips <= 0)
             {
                 _targetPlanet.SetPlanetFriendlyState();
-                PlanetController.Instance._freindlylPlanets.Add(_targetPlanet);
+                
             }
         }
-
     }
-
 
 }

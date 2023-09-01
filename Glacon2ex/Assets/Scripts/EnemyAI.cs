@@ -10,25 +10,25 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField]
     private float timeSinceLastSpawn = 0f;
-    [SerializeField] 
+    [SerializeField]
     private SpaceShip _spaceShipPrefab;
+    [SerializeField]
     private Transform _spawnPosition;
 
     private Planet _thisPlanet;
     private Planet _targetPlanet;
-    
+
+
 
     void Start()
     {
         _thisPlanet = GetComponent<Planet>();
-        PlanetController.Instance._enemyPlanets.Add(_thisPlanet);
+        //PlanetController.Instance._enemyPlanets.Add(_thisPlanet);
     }
 
     void Attack()
     {
-        if (this.gameObject.tag == "EnemyPlanet")
-        {
-            if (_thisPlanet._numOfShips > 0)
+            if ( _thisPlanet.isEnemy && _thisPlanet._numOfShips > 0)
             {
                 _targetPlanet = GetRandomNuetralPlanet();
                 if (_targetPlanet != null)
@@ -36,10 +36,14 @@ public class EnemyAI : MonoBehaviour
                     DeployEnemyShips(_targetPlanet);
                 }
             }
-        }
     }
     private void Update()
     {
+        if (!_thisPlanet.isEnemy)
+        {
+            return;
+        }
+
         timeSinceLastSpawn += Time.deltaTime;
         if (timeSinceLastSpawn >= spawnInterval)
         {
@@ -51,10 +55,10 @@ public class EnemyAI : MonoBehaviour
 
     Planet GetRandomFriendlyPlanet()
     {
-        if (PlanetController.Instance._freindlylPlanets.Count > 0)
+        if (PlanetController.Instance.friendlyPlanets.Count > 0)
         {
-            int randomPlanet = Random.Range(0, PlanetController.Instance._freindlylPlanets.Count);
-            return PlanetController.Instance._freindlylPlanets[randomPlanet];
+            int randomPlanet = Random.Range(0, PlanetController.Instance.friendlyPlanets.Count);
+            return PlanetController.Instance.friendlyPlanets[randomPlanet];
         }
 
         else
@@ -65,10 +69,10 @@ public class EnemyAI : MonoBehaviour
 
     Planet GetRandomNuetralPlanet()
     {
-        if (PlanetController.Instance._nuetralPlanets.Count > 0)
+        if (PlanetController.Instance.neutralPlanets.Count > 0)
         {
-            int randomPlanet = Random.Range(0, PlanetController.Instance._nuetralPlanets.Count);
-            return PlanetController.Instance._nuetralPlanets[randomPlanet];
+            int randomPlanet = Random.Range(0, PlanetController.Instance.neutralPlanets.Count);
+            return PlanetController.Instance.neutralPlanets[randomPlanet];
         }
         else
         {
@@ -78,10 +82,10 @@ public class EnemyAI : MonoBehaviour
 
     Planet GetRandomEnemyPlanet()
     {
-        if (PlanetController.Instance._enemyPlanets.Count > 0)
+        if (PlanetController.Instance.enemyPlanets.Count > 0)
         {
-            int randomPlanet = Random.Range(0, PlanetController.Instance._enemyPlanets.Count);
-            return PlanetController.Instance._enemyPlanets[randomPlanet];
+            int randomPlanet = Random.Range(0, PlanetController.Instance.enemyPlanets.Count);
+            return PlanetController.Instance.enemyPlanets[randomPlanet];
         }
         else
         {
@@ -91,14 +95,14 @@ public class EnemyAI : MonoBehaviour
 
     public void DeployEnemyShips(Planet targetPlanet)
     {
-
         _thisPlanet._numOfShips = _thisPlanet._numOfShips / 2;
         _thisPlanet._numOfshipText.text = _thisPlanet._numOfShips.ToString();
         for (int i = 0; i < _thisPlanet._numOfShips; i++)
         {
-            SpaceShip Ship = Instantiate(_spaceShipPrefab,_spawnPosition.position, Quaternion.identity);
+            SpaceShip Ship = Instantiate(_spaceShipPrefab, _spawnPosition.position, Quaternion.identity);
             Ship.GetComponent<SpaceShip>()._targetPlanet = targetPlanet;
+            Ship._spriteRenderer.color = Color.red;
+            
         }
     }
-
 }

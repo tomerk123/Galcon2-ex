@@ -9,7 +9,7 @@ public class Inputs : MonoBehaviour
 {
 
     private List<Planet> _selectedPlanets = new List<Planet>();
-    private Planet _planet;
+    
 
 
     private void Start()
