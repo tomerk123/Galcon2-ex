@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+ 
 public class EnemyShip : MonoBehaviour
 {
     public Planet _targetPlanet;
@@ -24,12 +24,12 @@ public class EnemyShip : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Planet collided = other.GetComponent<Planet>();
-        if (_targetPlanet.isEnemy() && collided == _targetPlanet)
+        if (_targetPlanet.isEnemy && collided == _targetPlanet)
         {
 
             _targetPlanet.IncreaseNumber();
         }
-        else if (_targetPlanet.isFrendly() && collided == _targetPlanet)
+        else if (_targetPlanet.isFrendly && collided == _targetPlanet)
         {
 
             _targetPlanet.DecreaseNumber();
@@ -40,7 +40,7 @@ public class EnemyShip : MonoBehaviour
                 PlanetController.Instance._enemyPlanets.Add(_targetPlanet);
             }
         }
-        else if (_targetPlanet.isNuetral())
+        else if (_targetPlanet.isNuetral)
         {
 
             _targetPlanet.DecreaseNumber();

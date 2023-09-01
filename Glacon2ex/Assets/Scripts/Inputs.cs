@@ -22,7 +22,8 @@ public class Inputs : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Planet ClickedObject = (hit.collider != null) ? hit.collider.gameObject.GetComponent<Planet>() : null;
-            if (ClickedObject != null && ClickedObject.CompareTag("FriendlyPlanet"))
+            
+            if (ClickedObject != null && ClickedObject.isFrendly)
             {
                 _selectedPlanets.Add(ClickedObject);
                 ClickedObject.SelectionIndicator.SetActive(true);

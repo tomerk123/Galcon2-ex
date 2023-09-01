@@ -10,8 +10,8 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField]
     private float timeSinceLastSpawn = 0f;
-    public GameObject _EnemyShip;
-    [SerializeField]
+    [SerializeField] 
+    private SpaceShip _spaceShipPrefab;
     private Transform _spawnPosition;
 
     private Planet _thisPlanet;
@@ -96,8 +96,8 @@ public class EnemyAI : MonoBehaviour
         _thisPlanet._numOfshipText.text = _thisPlanet._numOfShips.ToString();
         for (int i = 0; i < _thisPlanet._numOfShips; i++)
         {
-            GameObject Ship = Instantiate(_EnemyShip, _spawnPosition.position, Quaternion.identity);
-            Ship.GetComponent<EnemyShip>()._targetPlanet = targetPlanet;
+            SpaceShip Ship = Instantiate(_spaceShipPrefab,_spawnPosition.position, Quaternion.identity);
+            Ship.GetComponent<SpaceShip>()._targetPlanet = targetPlanet;
         }
     }
 

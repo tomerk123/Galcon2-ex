@@ -6,22 +6,33 @@ public class PlanetController : MonoBehaviour
 {
 
     [SerializeField]
-    private GameObject _planetPrefab;
+    // CR: like we talked about in the lesson, prefabs don't have to be kept as 'GameObject' - you can do 
+    //     private Planet _planetPrefab; 
+    private Planet _planetPrefab;
 
     [SerializeField]
     private int _numOfNuetralPlanets;
-    private float minDistance = 0.5f;
 
     public List<Planet> _nuetralPlanets = new List<Planet>();
     public List<Planet> _enemyPlanets = new List<Planet>();
     public List<Planet> _freindlylPlanets = new List<Planet>();
     public List<Vector3> planetPositions = new List<Vector3>();
     public static PlanetController Instance;
+    public PlanetState _planetState;
+    
+    
+    
 
-    private void Awake()
+
+
+     private void Awake()
     {
         Instance = this;
     }
+
+
+
+
     void Start()
     {
 
@@ -42,17 +53,18 @@ public class PlanetController : MonoBehaviour
     void Update()
     {
 
-    }
+    }   
 
     void InstantiateNuetralPlanets()
     {
         for (int i = 0; i < _numOfNuetralPlanets - 2; i++)
         {
-            GameObject planet = Instantiate(_planetPrefab, new Vector3(Random.Range(-7, 7), Random.Range(-7, 7), 0), Quaternion.identity);
-            float randomSize = Random.Range(1f, 2f);
+
+            Planet planet = Instantiate(_planetPrefab, new Vector3(Random.Range(-7, 7), Random.Range(-7, 7), 0), Quaternion.identity);
+            float randomSize = Random.Range(1f, 3f);
             planet.transform.localScale = new Vector3(randomSize, randomSize, 1);
             Planet planetN = planet.GetComponent<Planet>();
-            planetN._planetState = Planet.PlanetState.Neutral;
+            _planetState = PlanetState.Neutral;
             AddPlanet(planetN);
             planetN.SetPlanetVisuals();
             Debug.Log(_nuetralPlanets.Count);
@@ -61,52 +73,52 @@ public class PlanetController : MonoBehaviour
 
     public void InstantiateEnemyPlanet()
     {
-        GameObject planet = Instantiate(_planetPrefab, new Vector3(Random.Range(-7, 7), Random.Range(-7, 7)), Quaternion.identity);
+       Planet planet = Instantiate(_planetPrefab, new Vector3(Random.Range(-7, 7), Random.Range(-7, 7)), Quaternion.identity);
         float StartSize = 2f;
         planet.transform.localScale = new Vector3(StartSize, StartSize, StartSize);
         Planet planetE = planet.GetComponent<Planet>();
-        planetE._planetState = Planet.PlanetState.Enemy;
+        _planetState = PlanetState.Enemy;
         planetE.SetPlanetVisuals();
         _enemyPlanets.Add(planetE);
     }
 
     public void InstantiateFriendlyPlanet()
     {
-        GameObject planet = Instantiate(_planetPrefab, new Vector3(Random.Range(-7, 7), Random.Range(-7, 7)), Quaternion.identity);
+        Planet planet = Instantiate(_planetPrefab, new Vector3(Random.Range(-7, 7), Random.Range(-7, 7)), Quaternion.identity);
         float StartSize = 2f;
         planet.transform.localScale = new Vector3(StartSize, StartSize, StartSize);
         Planet planetF = planet.GetComponent<Planet>();
-        planetF._planetState = Planet.PlanetState.Friendly;
+        _planetState = PlanetState.Friendly;
         planetF.SetPlanetVisuals();
         _freindlylPlanets.Add(planetF);
     }
 
     public void AddPlanet(Planet planet)
     {
-        if (planet._planetState == Planet.PlanetState.Neutral)
+        if (_planetState == PlanetState.Neutral)
         {
             _nuetralPlanets.Add(planet);
         }
-        else if (planet._planetState == Planet.PlanetState.Enemy)
+        else if (_planetState == PlanetState.Enemy)
         {
             _enemyPlanets.Add(planet);
         }
-        else if (planet._planetState == Planet.PlanetState.Friendly)
+        else if (_planetState == PlanetState.Friendly)
         {
             _freindlylPlanets.Add(planet);
         }
     }
     public void RemovePlanet(Planet planet)
     {
-        if (planet._planetState == Planet.PlanetState.Neutral)
+        if (_planetState == PlanetState.Neutral)
         {
             _nuetralPlanets.Remove(planet);
         }
-        else if (planet._planetState == Planet.PlanetState.Enemy)
+        else if (_planetState == PlanetState.Enemy)
         {
             _enemyPlanets.Remove(planet);
         }
-        else if (planet._planetState == Planet.PlanetState.Friendly)
+        else if (_planetState == PlanetState.Friendly)
         {
             _freindlylPlanets.Remove(planet);
         }
@@ -150,6 +162,9 @@ public class PlanetController : MonoBehaviour
         float randomY = Random.Range(-7, 7);
         return new Vector3(randomX, randomY, 0);
     }
+
+
+ 
 
 }
 
