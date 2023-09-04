@@ -23,19 +23,19 @@ public class EnemyAI : MonoBehaviour
     void Start()
     {
         _thisPlanet = GetComponent<Planet>();
-        //PlanetController.Instance._enemyPlanets.Add(_thisPlanet);
     }
 
     void Attack()
     {
-            if ( _thisPlanet.isEnemy && _thisPlanet._numOfShips > 0)
+        if (_thisPlanet.isEnemy && _thisPlanet._numOfShips > 0)
+        {
+            _targetPlanet = GetRandomNuetralPlanet();
+            if (_targetPlanet != null)
             {
-                _targetPlanet = GetRandomNuetralPlanet();
-                if (_targetPlanet != null)
-                {
-                    DeployEnemyShips(_targetPlanet);
-                }
+                DeployEnemyShips(_targetPlanet);
             }
+        }
+     
     }
     private void Update()
     {
@@ -102,7 +102,7 @@ public class EnemyAI : MonoBehaviour
             SpaceShip Ship = Instantiate(_spaceShipPrefab, _spawnPosition.position, Quaternion.identity);
             Ship.GetComponent<SpaceShip>()._targetPlanet = targetPlanet;
             Ship._spriteRenderer.color = Color.red;
-            
         }
     }
+
 }

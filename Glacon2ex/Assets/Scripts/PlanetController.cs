@@ -6,17 +6,13 @@ using UnityEngine;
 
 public class PlanetController : MonoBehaviour
 {
-    // CR: like we talked about in the lesson, prefabs don't have to be kept as 'GameObject' - you can do 
-    //     private Planet _planetPrefab; 
+   
     [SerializeField]
     private Planet _planetPrefab;
 
     [SerializeField]
     private int _numOfPlanets;
 
-    // public List<Planet> _nuetralPlanets = new List<Planet>();
-    //public List<Planet> _enemyPlanets = new List<Planet>();
-    // public List<Planet> _freindlylPlanets = new List<Planet>();
     public List<Planet> allPlanets = new List<Planet>();
     public static PlanetController Instance;
 

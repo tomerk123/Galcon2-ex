@@ -25,7 +25,7 @@ public class Planet : MonoBehaviour
     private SpaceShip _shipPrefab;
 
     public PlanetState _planetState;
-    public Color _planetColor;
+
     private SpriteRenderer _spriteRenderer;
 
     public GameObject SelectionIndicator;
@@ -34,6 +34,7 @@ public class Planet : MonoBehaviour
 
     private int _startingShips = 100;
     private float _size;
+
 
 
     private void Update()
@@ -94,6 +95,7 @@ public class Planet : MonoBehaviour
         for (int i = 0; i < _numOfShips; i++)
         {
             SpaceShip Ship = Instantiate(_shipPrefab, _spawnPosition.position, Quaternion.identity);
+            Ship._spriteRenderer.color = this._spriteRenderer.color;
             Ship.GetComponent<SpaceShip>()._targetPlanet = targetPlanet;
         }
     }
@@ -143,37 +145,50 @@ public class Planet : MonoBehaviour
         {
             case PlanetState.Enemy:
                 _planetState = PlanetState.Enemy;
-                _planetColor = Color.red;
-                _spriteRenderer.color = _planetColor;
+                _spriteRenderer.color = Color.red;
                 tag = "EnemyPlanet";
                 // Set state to enemy for enemy planets
                 break;
             case PlanetState.Friendly:
                 _planetState = PlanetState.Friendly;
-                _planetColor = Color.blue;
-                _spriteRenderer.color = _planetColor;
+                _spriteRenderer.color = Color.blue;
                 tag = "FriendlyPlanet";
                 // Set state to friendly for friendly planets
                 break;
             case PlanetState.Neutral:
                 _planetState = PlanetState.Neutral;
-                _planetColor = Color.gray;
-                _spriteRenderer.color = _planetColor;
+                _spriteRenderer.color = Color.gray;
                 tag = "NeutralPlanet";
                 // Set state to neutral for neutral planets
                 break;
         }
     }
-
-    public void SetPlanetFriendlyState()
+    public void SetPlanetFreindlyState()
     {
         _planetState = PlanetState.Friendly;
-        SetPlanetSettings(PlanetState.Friendly);
+        _spriteRenderer.color = Color.blue;
+        tag = "FriendlyPlanet";
     }
 
     public void SetPlanetEnemyState()
     {
         _planetState = PlanetState.Enemy;
-        SetPlanetSettings(PlanetState.Enemy);
+        _spriteRenderer.color = Color.red;
+        tag = "EnemyPlanet";
+    }
+
+    public PlanetState GetPlanetStateByShip(SpaceShip ship)
+    {
+        if (ship._spriteRenderer.color == Color.blue)
+        {
+            _planetState = PlanetState.Friendly;
+            SetPlanetSettings(_planetState);
+        }
+        else if (ship._spriteRenderer.color == Color.red)
+        {
+            _planetState = PlanetState.Enemy;
+            SetPlanetSettings(_planetState);
+        }
+        return _planetState;
     }
 }
