@@ -16,10 +16,9 @@ public class PlanetController : MonoBehaviour
     [SerializeField]
     private LayerMask _layerMask;
 
-    public List<Planet> allPlanets = new List<Planet>();
+   
     public static PlanetController Instance;
 
-    private PlanetState _planetState;
     private void Awake()
     {
         Instance = this;
@@ -56,7 +55,7 @@ public class PlanetController : MonoBehaviour
                 planetN.transform.localScale = new Vector3(randomSize, randomSize, 1);
                 planetN._planetState = PlanetState.Neutral;
                 planetN.SetPlanetSettings(planetN._planetState);
-                allPlanets.Add(planetN);
+                
             }
             else
             {
@@ -78,7 +77,7 @@ public class PlanetController : MonoBehaviour
         planetE.transform.localScale = new Vector3(StartSize, StartSize, StartSize);
         planetE._planetState = PlanetState.Enemy;
         planetE.SetPlanetEnemyState();
-        allPlanets.Add(planetE);
+       
     }
 
     void InstantiateFriendlyPlanet()
@@ -95,11 +94,11 @@ public class PlanetController : MonoBehaviour
         planetF.transform.localScale = new Vector3(StartSize, StartSize, StartSize);
         planetF._planetState = PlanetState.Friendly;
         planetF.SetPlanetSettings(planetF._planetState);
-        allPlanets.Add(planetF);
+        
     }
 
 
-
+/*
     public List<Planet> friendlyPlanets
     {
         get
@@ -147,7 +146,7 @@ public class PlanetController : MonoBehaviour
             return neutralPlanets;
         }
     }
-
+*/
     private void GetRandomPosition()
     {
         Vector3 position = new Vector3(Random.Range(-8, 8), Random.Range(-9, 9), 0);

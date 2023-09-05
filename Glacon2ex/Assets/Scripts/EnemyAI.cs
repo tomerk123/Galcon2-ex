@@ -29,7 +29,8 @@ public class EnemyAI : MonoBehaviour
     {
         if (_thisPlanet.isEnemy && _thisPlanet._numOfShips > 0)
         {
-            _targetPlanet = GetRandomNuetralPlanet();
+            _targetPlanet = GetRandomPlanet();
+            
             if (_targetPlanet != null)
             {
                 DeployEnemyShips(_targetPlanet);
@@ -53,26 +54,15 @@ public class EnemyAI : MonoBehaviour
     }
 
 
-    Planet GetRandomFriendlyPlanet()
+    Planet GetRandomPlanet()
     {
-        if (PlanetController.Instance.friendlyPlanets.Count > 0)
+        List<Planet> planets = new List<Planet>();
+        planets.AddRange(GameManager.Instance.GetPlanetList(PlanetState.Friendly));
+        planets.AddRange(GameManager.Instance.GetPlanetList(PlanetState.Neutral));
+        if (planets.Count > 0)
         {
-            int randomPlanet = Random.Range(0, PlanetController.Instance.friendlyPlanets.Count);
-            return PlanetController.Instance.friendlyPlanets[randomPlanet];
-        }
-
-        else
-        {
-            return null;
-        }
-    }
-
-    Planet GetRandomNuetralPlanet()
-    {
-        if (PlanetController.Instance.neutralPlanets.Count > 0)
-        {
-            int randomPlanet = Random.Range(0, PlanetController.Instance.neutralPlanets.Count);
-            return PlanetController.Instance.neutralPlanets[randomPlanet];
+            int randomPlanet = Random.Range(0,planets.Count);
+            return planets[randomPlanet];
         }
         else
         {
@@ -80,18 +70,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    Planet GetRandomEnemyPlanet()
-    {
-        if (PlanetController.Instance.enemyPlanets.Count > 0)
-        {
-            int randomPlanet = Random.Range(0, PlanetController.Instance.enemyPlanets.Count);
-            return PlanetController.Instance.enemyPlanets[randomPlanet];
-        }
-        else
-        {
-            return null;
-        }
-    }
+ 
 
     public void DeployEnemyShips(Planet targetPlanet)
     {
@@ -104,5 +83,6 @@ public class EnemyAI : MonoBehaviour
             Ship._spriteRenderer.color = Color.red;
         }
     }
+
 
 }

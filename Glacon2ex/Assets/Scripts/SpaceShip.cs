@@ -48,63 +48,66 @@ public class SpaceShip : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Planet collided = other.GetComponent<Planet>();
-        if(collided == _targetPlanet)
+        if (collided == _targetPlanet)
         {
-        if (collided.isFrendly && this._spriteRenderer.color == Color.blue)
-        {
-            collided.IncreaseNumber();
-            collided._numOfshipText.text = collided._numOfShips.ToString();
-            Destroy(this.gameObject);
-        }
-
-        else if (collided.isEnemy && this._spriteRenderer.color == Color.red)
-        {
-            collided.IncreaseNumber();
-            collided._numOfshipText.text = collided._numOfShips.ToString();
-            Destroy(this.gameObject);
-        }
-
-        if (collided.isNuetral)
-        {
-            
-            collided.DecreaseNumber();
-            collided._numOfshipText.text = collided._numOfShips.ToString();
-            if (collided._numOfShips <= 0)
+            if (collided.isFrendly && this._spriteRenderer.color == Color.blue)
             {
-                collided._numOfShips = 1;
-                collided.SetPlanetSettings(collided.GetPlanetStateByShip(this));
                 collided.IncreaseNumber();
+                collided._numOfshipText.text = collided._numOfShips.ToString();
+                Destroy(this.gameObject);
             }
-            Destroy(this.gameObject);
-        }
 
-        if (collided.isEnemy && _spriteRenderer.color == Color.blue)
-        {
-            collided.DecreaseNumber();
-            collided._numOfshipText.text = collided._numOfShips.ToString();
-
-            if (collided._numOfShips <= 0)
+            else if (collided.isEnemy && this._spriteRenderer.color == Color.red)
             {
-                collided._numOfShips = 1;
-                collided.SetPlanetFreindlyState();
                 collided.IncreaseNumber();
+                collided._numOfshipText.text = collided._numOfShips.ToString();
+                Destroy(this.gameObject);
             }
-            Destroy(this.gameObject);
-        }
 
-        // if (collided.isFrendly && this._spriteRenderer.color == Color.red)
-        // {
-        //     collided.DecreaseNumber();
-        //     collided._numOfshipText.text = collided._numOfShips.ToString();
-        //     if (collided._numOfShips <= 0)
-        //     {
-        //         collided._numOfShips = 1;
-        //         collided.SetPlanetEnemyState();
-        //         collided.IncreaseNumber();
-        //     }
-        //     Destroy(this.gameObject);
-        // }
-    }
+            if (collided.isNuetral)
+            {
+
+                collided.DecreaseNumber();
+                collided._numOfshipText.text = collided._numOfShips.ToString();
+                if (collided._numOfShips <= 0)
+                {
+                    collided._numOfShips = 1;
+                    collided.SetPlanetSettings(collided.GetPlanetStateByShip(this));
+                    collided.IncreaseNumber();
+                }
+                Destroy(this.gameObject);
+            }
+
+            if (collided.isEnemy && _spriteRenderer.color == Color.blue)
+            {
+                collided.DecreaseNumber();
+                collided._numOfshipText.text = collided._numOfShips.ToString();
+
+                if (collided._numOfShips <= 0)
+                {
+                    
+                    collided.SetPlanetFreindlyState();
+                    collided.IncreaseNumber();
+                    GameManager.Instance.CheckWinCondition();
+                    
+                }
+                Destroy(this.gameObject);
+            }
+
+            if (collided.isFrendly && this._spriteRenderer.color == Color.red)
+            {
+                collided.DecreaseNumber();
+                collided._numOfshipText.text = collided._numOfShips.ToString();
+                if (collided._numOfShips <= 0)
+                {
+                    
+                    collided.SetPlanetEnemyState();
+                    collided.IncreaseNumber();
+                    GameManager.Instance.CheckWinCondition();
+                }
+                Destroy(this.gameObject);
+            }
+        }
     }
 
 
