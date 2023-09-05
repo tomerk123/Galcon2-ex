@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
+
+
 
 // CR:
 // Don't keep default-values in the code - keep them in prefabs.
@@ -45,22 +48,25 @@ public class SpaceShip : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Planet collided = other.GetComponent<Planet>();
+        if(collided == _targetPlanet)
+        {
         if (collided.isFrendly && this._spriteRenderer.color == Color.blue)
         {
             collided.IncreaseNumber();
             collided._numOfshipText.text = collided._numOfShips.ToString();
             Destroy(this.gameObject);
         }
+
         else if (collided.isEnemy && this._spriteRenderer.color == Color.red)
         {
-            Destroy(this);
             collided.IncreaseNumber();
             collided._numOfshipText.text = collided._numOfShips.ToString();
-
+            Destroy(this.gameObject);
         }
 
-        else if (collided.isNuetral)
+        if (collided.isNuetral)
         {
+            
             collided.DecreaseNumber();
             collided._numOfshipText.text = collided._numOfShips.ToString();
             if (collided._numOfShips <= 0)
@@ -72,7 +78,7 @@ public class SpaceShip : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        else if (collided.isEnemy && _spriteRenderer.color == Color.blue)
+        if (collided.isEnemy && _spriteRenderer.color == Color.blue)
         {
             collided.DecreaseNumber();
             collided._numOfshipText.text = collided._numOfShips.ToString();
@@ -81,25 +87,24 @@ public class SpaceShip : MonoBehaviour
             {
                 collided._numOfShips = 1;
                 collided.SetPlanetFreindlyState();
-                Debug.Log("1");
                 collided.IncreaseNumber();
-
             }
             Destroy(this.gameObject);
         }
 
-        if (collided.isFrendly && this._spriteRenderer.color == Color.red)
-        {
-            collided.DecreaseNumber();
-            collided._numOfshipText.text = collided._numOfShips.ToString();
-            if (collided._numOfShips <= 0)
-            {
-                collided._numOfShips = 1;
-                collided.SetPlanetEnemyState();
-                collided.IncreaseNumber();
-            }
-            Destroy(this);
-        }
+        // if (collided.isFrendly && this._spriteRenderer.color == Color.red)
+        // {
+        //     collided.DecreaseNumber();
+        //     collided._numOfshipText.text = collided._numOfShips.ToString();
+        //     if (collided._numOfShips <= 0)
+        //     {
+        //         collided._numOfShips = 1;
+        //         collided.SetPlanetEnemyState();
+        //         collided.IncreaseNumber();
+        //     }
+        //     Destroy(this.gameObject);
+        // }
+    }
     }
 
 

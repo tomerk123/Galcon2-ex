@@ -6,12 +6,15 @@ using UnityEngine;
 
 public class PlanetController : MonoBehaviour
 {
-   
+
     [SerializeField]
     private Planet _planetPrefab;
 
     [SerializeField]
     private int _numOfPlanets;
+
+    [SerializeField]
+    private LayerMask _layerMask;
 
     public List<Planet> allPlanets = new List<Planet>();
     public static PlanetController Instance;
@@ -25,16 +28,13 @@ public class PlanetController : MonoBehaviour
     void Start()
     {
 
-        // Vector3 randomPos = GenerateRandomPosition();
-        //bool isOverlapping = CheckForOverlap(randomPos);
-        // planetPositions.Add(randomPos);
 
-        // while (!isOverlapping)
-        //{
+
         InstantiateNuetralPlanets();
         InstantiateEnemyPlanet();
         InstantiateFriendlyPlanet();
-        // }
+
+
     }
 
     void Update()
@@ -44,38 +44,60 @@ public class PlanetController : MonoBehaviour
 
     void InstantiateNuetralPlanets()
     {
-    
+
         for (int i = 0; i < _numOfPlanets - 2; i++)
         {
-            Planet planetN = Instantiate(_planetPrefab, new Vector3(Random.Range(-7, 7), Random.Range(-7, 7), 0), Quaternion.identity);
+            Vector3 spwanPos = new Vector3(Random.Range(-7, 7), Random.Range(-6.5f, 6.5f), 0);
             float randomSize = Random.Range(1f, 3f);
-            planetN.transform.localScale = new Vector3(randomSize, randomSize, 1);
-            planetN._planetState = PlanetState.Neutral;
-            planetN.SetPlanetSettings(planetN._planetState);
-            allPlanets.Add(planetN);
+            float radius = randomSize * 2 / (2 * Mathf.PI);
+            if (!CheckOverLap(spwanPos, radius))
+            {
+                Planet planetN = Instantiate(_planetPrefab, spwanPos, Quaternion.identity);
+                planetN.transform.localScale = new Vector3(randomSize, randomSize, 1);
+                planetN._planetState = PlanetState.Neutral;
+                planetN.SetPlanetSettings(planetN._planetState);
+                allPlanets.Add(planetN);
+            }
+            else
+            {
+                i--;
+            }
         }
     }
 
-        void InstantiateEnemyPlanet()
+    void InstantiateEnemyPlanet()
+    {
+        Vector3 spwanPos = new Vector3(Random.Range(-7, 7), Random.Range(-6.5f, 6.5f), 0);
+        float StartSize = 2f;
+        float radius = StartSize * 2 / (2 * Mathf.PI);
+        while (CheckOverLap(spwanPos, radius))
         {
-            Planet planetE = Instantiate(_planetPrefab, new Vector3(Random.Range(-7, 7), Random.Range(-7, 7)), Quaternion.identity);
-            float StartSize = 2f;
-            planetE.transform.localScale = new Vector3(StartSize, StartSize, StartSize);
-            planetE._planetState = PlanetState.Enemy;
-            planetE.SetPlanetSettings(planetE._planetState);
-            allPlanets.Add(planetE);
+            spwanPos = new Vector3(Random.Range(-7, 7), Random.Range(-6.5f, 6.5f), 0);
         }
+        Planet planetE = Instantiate(_planetPrefab, spwanPos, Quaternion.identity);
+        planetE.transform.localScale = new Vector3(StartSize, StartSize, StartSize);
+        planetE._planetState = PlanetState.Enemy;
+        planetE.SetPlanetEnemyState();
+        allPlanets.Add(planetE);
+    }
 
-        void InstantiateFriendlyPlanet()
+    void InstantiateFriendlyPlanet()
+    {
+        Vector3 spwanPos = new Vector3(Random.Range(-7, 7), Random.Range(-6.5f, 6.5f), 0);
+
+        float StartSize = 2f;
+        float radius = StartSize * 2 / (2 * Mathf.PI);
+        while (CheckOverLap(spwanPos, radius))
         {
-            Planet planetF = Instantiate(_planetPrefab, new Vector3(Random.Range(-7, 7), Random.Range(-7, 7)), Quaternion.identity);
-            float StartSize = 2f;
-            planetF.transform.localScale = new Vector3(StartSize, StartSize, StartSize);
-            planetF._planetState = PlanetState.Friendly;
-            planetF.SetPlanetSettings(planetF._planetState);
-            allPlanets.Add(planetF);
+            spwanPos = new Vector3(Random.Range(-7, 7), Random.Range(-6.5f, 6.5f), 0);
         }
-    
+        Planet planetF = Instantiate(_planetPrefab, spwanPos, Quaternion.identity);
+        planetF.transform.localScale = new Vector3(StartSize, StartSize, StartSize);
+        planetF._planetState = PlanetState.Friendly;
+        planetF.SetPlanetSettings(planetF._planetState);
+        allPlanets.Add(planetF);
+    }
+
 
 
     public List<Planet> friendlyPlanets
@@ -132,31 +154,13 @@ public class PlanetController : MonoBehaviour
     }
 
 
-    // private bool CheckOverLap(Vector3 position, float radius)
-    // {
-    //     Collider2D[] colliders = Physics2D.OverlapCircleAll(position, 1f, _overlapLayerMask);
-    //     return colliders.Length > 0;
+    private bool CheckOverLap(Vector2 position, float radius)
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, radius + 1f, _layerMask);
+        return colliders.Length > 0;
+    }
 
-    //     if(!CheckOverLap(position,radius))
-    //     {
-    //         GameObject NewPlanet = Instantiate(_planetPrefab, position, Quaternion.identity);
-    //         Planet planet = NewPlanet.GetComponent<Planet>();
-    //         Instantiate(_planetPrefab, position, Quaternion.identity);
-    //     }
-    // }
 
-    // bool CheckForOverlap(Vector3 position)
-    // {
-
-    //     foreach (Vector3 existingPosition in planetPositions)
-    //     {
-    //         if (Vector3.Distance(position, existingPosition) < minDistance)
-    //         {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
 
     Vector3 GenerateRandomPosition()
     {

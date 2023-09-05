@@ -60,13 +60,7 @@ public class Planet : MonoBehaviour
 
     void Start()
     {
-
         ShipUpdate();
-
-        _size = transform.localScale.x;
-        _shipSpwanRate /= _size;
-        _numOfShips = _startingShips;
-        _numOfshipText.text = _numOfShips.ToString();
     }
 
 
@@ -82,7 +76,7 @@ public class Planet : MonoBehaviour
         }
         else
         {
-            _numOfShips = Random.Range(10, 50);
+            _numOfShips = Random.Range(10,25);
             _numOfshipText.text = _numOfShips.ToString();
         }
 
@@ -191,4 +185,7 @@ public class Planet : MonoBehaviour
         }
         return _planetState;
     }
+
+
+
 }
