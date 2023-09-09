@@ -188,7 +188,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1068049804
 Transform:
   m_ObjectHideFlags: 0
@@ -394,10 +394,9 @@ MonoBehaviour:
   _shipSpwanRate: 3
   _spawnPosition: {fileID: 7675404446657856131}
   _shipPrefab: {fileID: -5135205141277966637, guid: 16cbbdb988d42df448999fcc41db098d, type: 3}
-  _planetState: 2
-  _planetColor: {r: 0, g: 0, b: 0, a: 0}
   SelectionIndicator: {fileID: 1068049802}
-  _isClicked: 0
+  _planetState: 2
+  isClicked: 0
 --- !u!58 &7069908393358992921
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -408,6 +407,25 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0

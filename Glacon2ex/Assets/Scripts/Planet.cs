@@ -23,15 +23,13 @@ public class Planet : MonoBehaviour
     private Transform _spawnPosition;
     [SerializeField]
     private SpaceShip _shipPrefab;
+    
+    public GameObject SelectionIndicator;
 
     public PlanetState _planetState;
-
     private SpriteRenderer _spriteRenderer;
-
-    public GameObject SelectionIndicator;
-    public bool _isClicked = false;
+    public bool isClicked = false;
     private float _spwanNewShipTimer;
-
     private int _startingShips = 100;
     private float _size;
 
@@ -76,15 +74,15 @@ public class Planet : MonoBehaviour
         }
         else
         {
-            _numOfShips = Random.Range(10,25);
+            _numOfShips = Random.Range(10, 25);
             _numOfshipText.text = _numOfShips.ToString();
         }
 
     }
     public void DeployShips(Planet targetPlanet)
     {
-
-        _numOfShips = _numOfShips / 2;
+        int _numShipTmp = _numOfShips / 2;
+        _numOfShips -= _numShipTmp;
         _numOfshipText.text = _numOfShips.ToString();
         for (int i = 0; i < _numOfShips; i++)
         {
@@ -101,7 +99,7 @@ public class Planet : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (!_isClicked)
+        if (!isClicked)
         {
             SelectionIndicator.SetActive(false);
         }

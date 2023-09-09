@@ -27,14 +27,14 @@ public class Inputs : MonoBehaviour
             {
                 _selectedPlanets.Add(ClickedObject);
                 ClickedObject.SelectionIndicator.SetActive(true);
-                ClickedObject._isClicked = true;
+                ClickedObject.isClicked = true;
             }
             else if (ClickedObject == null)
             {
                 foreach (Planet planet in _selectedPlanets)
                 {
                     planet.SelectionIndicator.SetActive(false);
-                    planet._isClicked = false;
+                    planet.isClicked = false;
                 }
             }
         }
