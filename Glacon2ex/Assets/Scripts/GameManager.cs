@@ -74,6 +74,18 @@ public class GameManager : MonoBehaviour
             Debug.Log("lose");
         }
     }
+
+
+    void RestartGame()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        
+    }
+
+    void QuitGame()
+    {
+        Application.Quit();
+    }
 }
 
 

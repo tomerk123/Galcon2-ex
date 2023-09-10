@@ -44,7 +44,7 @@ public class PlanetController : MonoBehaviour
     void InstantiateNuetralPlanets()
     {
 
-        for (int i = 0; i < _numOfPlanets - 2; i++)
+        for (int i = 0; i < StartScreen.Instance.NumOfPlanets - 2; i++)
         {
             Vector3 spwanPos = new Vector3(Random.Range(-7, 7), Random.Range(-6.5f, 6.5f), 0);
             float randomSize = Random.Range(1f, 3f);
