@@ -46,7 +46,7 @@ public class PlanetController : MonoBehaviour
 
         for (int i = 0; i < StartScreen.Instance.NumOfPlanets - 2; i++)
         {
-            Vector3 spwanPos = new Vector3(Random.Range(-7, 7), Random.Range(-6.5f, 6.5f), 0);
+            Vector3 spwanPos = new Vector3(Random.Range(-7, 7), Random.Range(-8.5f, 8.5f), 0);
             float randomSize = Random.Range(1f, 3f);
             float radius = randomSize * 2 / (2 * Mathf.PI);
             if (!CheckOverLap(spwanPos, radius))
@@ -66,12 +66,12 @@ public class PlanetController : MonoBehaviour
 
     void InstantiateEnemyPlanet()
     {
-        Vector3 spwanPos = new Vector3(Random.Range(-7, 7), Random.Range(-6.5f, 6.5f), 0);
+        Vector3 spwanPos = new Vector3(Random.Range(-7, 7), Random.Range(-8.5f, 8.5f), 0);
         float StartSize = 2f;
         float radius = StartSize * 2 / (2 * Mathf.PI);
         while (CheckOverLap(spwanPos, radius))
         {
-            spwanPos = new Vector3(Random.Range(-7, 7), Random.Range(-6.5f, 6.5f), 0);
+            spwanPos = new Vector3(Random.Range(-7, 7), Random.Range(-8.5f, 8.5f), 0);
         }
         Planet planetE = Instantiate(_planetPrefab, spwanPos, Quaternion.identity);
         planetE.transform.localScale = new Vector3(StartSize, StartSize, StartSize);
@@ -82,13 +82,13 @@ public class PlanetController : MonoBehaviour
 
     void InstantiateFriendlyPlanet()
     {
-        Vector3 spwanPos = new Vector3(Random.Range(-7, 7), Random.Range(-6.5f, 6.5f), 0);
+        Vector3 spwanPos = new Vector3(Random.Range(-7, 7), Random.Range(-8.5f, 8.5f), 0);
 
         float StartSize = 2f;
         float radius = StartSize * 2 / (2 * Mathf.PI);
         while (CheckOverLap(spwanPos, radius))
         {
-            spwanPos = new Vector3(Random.Range(-7, 7), Random.Range(-6.5f, 6.5f), 0);
+            spwanPos = new Vector3(Random.Range(-7, 7), Random.Range(-8.5f, 8.5f), 0);
         }
         Planet planetF = Instantiate(_planetPrefab, spwanPos, Quaternion.identity);
         planetF.transform.localScale = new Vector3(StartSize, StartSize, StartSize);
