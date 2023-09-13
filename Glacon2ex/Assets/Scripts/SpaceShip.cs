@@ -27,6 +27,7 @@ public class SpaceShip : MonoBehaviour
 
     public Planet _targetPlanet;
     public SpriteRenderer _spriteRenderer;
+    [SerializeField] private GameObject _explosionVFX;
 
     [SerializeField] private float _speed = 8f;
 
@@ -66,6 +67,7 @@ public class SpaceShip : MonoBehaviour
 
             if (collided.isNuetral)
             {
+                GameObject explosion = Instantiate(_explosionVFX, transform.position, Quaternion.identity);
 
                 collided.DecreaseNumber();
                 collided._numOfshipText.text = collided._numOfShips.ToString();
@@ -75,11 +77,13 @@ public class SpaceShip : MonoBehaviour
                     collided.SetPlanetSettings(collided.GetPlanetStateByShip(this));
                     collided.IncreaseNumber();
                 }
+                Destroy(explosion, 1f);
                 Destroy(this.gameObject);
             }
 
             if (collided.isEnemy && _spriteRenderer.color == Color.blue)
             {
+                GameObject explosion = Instantiate(_explosionVFX, transform.position, Quaternion.identity);
                 collided.DecreaseNumber();
                 collided._numOfshipText.text = collided._numOfShips.ToString();
 
@@ -91,11 +95,13 @@ public class SpaceShip : MonoBehaviour
                     GameManager.Instance.CheckWinCondition();
                     
                 }
+                Destroy(explosion, 1f);
                 Destroy(this.gameObject);
             }
 
             if (collided.isFrendly && this._spriteRenderer.color == Color.red)
             {
+                GameObject explosion = Instantiate(_explosionVFX, transform.position, Quaternion.identity);
                 collided.DecreaseNumber();
                 collided._numOfshipText.text = collided._numOfShips.ToString();
                 if (collided._numOfShips <= 0)
@@ -105,6 +111,7 @@ public class SpaceShip : MonoBehaviour
                     collided.IncreaseNumber();
                     GameManager.Instance.CheckWinCondition();
                 }
+                Destroy(explosion, 1f);
                 Destroy(this.gameObject);
             }
         }
