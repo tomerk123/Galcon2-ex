@@ -11,6 +11,8 @@ public enum PlanetState
     Neutral
 }
 
+// CR: [discuss] private vs public.
+
 public class Planet : MonoBehaviour
 {
     [SerializeField]
@@ -24,16 +26,15 @@ public class Planet : MonoBehaviour
     [SerializeField]
     private SpaceShip _shipPrefab;
     
+    // CR: [discuss] state
     public GameObject SelectionIndicator;
 
     public PlanetState _planetState;
     private SpriteRenderer _spriteRenderer;
     public bool isClicked = false;
     private float _spwanNewShipTimer;
-    private int _startingShips = 100;
+    private int _startingShips = 100; // CR: no defaults in the code - use [SerializeField]
     private float _size;
-
-
 
     private void Update()
     {
@@ -42,6 +43,7 @@ public class Planet : MonoBehaviour
 
     void SpwanNewShipTimer()
     {
+        // CR: [discuss] rate vs time.
         _spwanNewShipTimer += Time.deltaTime;
         if (_spwanNewShipTimer >= _shipSpwanRate)
         {
@@ -61,14 +63,13 @@ public class Planet : MonoBehaviour
         ShipUpdate();
     }
 
-
-
     void ShipUpdate()
     {
         if (isFrendly || isEnemy)
         {
+            // CR: "GetComponent<Transform>().localScale" is slower than "transform.localScale". 
             _size = GetComponent<Transform>().localScale.x;
-            _shipSpwanRate /= _size;
+            _shipSpwanRate /= _size; // CR: [discuss]
             _numOfShips = _startingShips;
             _numOfshipText.text = _numOfShips.ToString();
         }
@@ -81,6 +82,7 @@ public class Planet : MonoBehaviour
     }
     public void DeployShips(Planet targetPlanet)
     {
+        // CR: [discuss]
         int _numShipTmp = _numOfShips / 2;
         _numOfShips -= _numShipTmp;
         _numOfshipText.text = _numOfShips.ToString();
@@ -121,7 +123,6 @@ public class Planet : MonoBehaviour
     public bool isEnemy => _planetState == PlanetState.Enemy;
     public bool isNuetral => _planetState == PlanetState.Neutral;
 
-
     void ShipSpwanUpdate()
     {
         if (_planetState == PlanetState.Friendly || _planetState == PlanetState.Enemy)
@@ -138,6 +139,7 @@ public class Planet : MonoBehaviour
             case PlanetState.Enemy:
                 _planetState = PlanetState.Enemy;
                 _spriteRenderer.color = Color.red;
+                // CR:  [discuss] tags
                 tag = "EnemyPlanet";
                 // Set state to enemy for enemy planets
                 break;

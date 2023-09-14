@@ -19,7 +19,6 @@ using UnityEngine;
 // from the value in the prefab - but there's no indication if the value in the prefab
 // is the same as the value in the code or not...
 
-
 // CR: Don't split the code into 'EnemyShip' and 'SpaceShip' - just us a single SpaceShip class.
 //     To differentiate between those cases, add a PlanetColor so you can tell if it is friendly/enemy/neutral.
 public class SpaceShip : MonoBehaviour

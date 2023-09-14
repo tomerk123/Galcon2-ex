@@ -9,8 +9,6 @@ public class StartScreen : MonoBehaviour
     public int NumOfPlanets { get; private set; }
     public static StartScreen Instance => _instance;
 
-
-
     private void Awake()
     {
 

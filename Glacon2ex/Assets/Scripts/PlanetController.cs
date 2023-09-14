@@ -33,12 +33,11 @@ public class PlanetController : MonoBehaviour
 
     void Update()
     {
-
     }
 
     void InstantiateNuetralPlanets()
     {
-
+        // CR: [discuss]
         for (int i = 0; i < StartScreen.Instance.NumOfPlanets - 2; i++)
         {
             Vector3 spwanPos = new Vector3(Random.Range(-6.5f, 10f), Random.Range(-6.5f, 10f), 0);
@@ -50,7 +49,6 @@ public class PlanetController : MonoBehaviour
                 planetN.transform.localScale = new Vector3(randomSize, randomSize, 1);
                 planetN._planetState = PlanetState.Neutral;
                 planetN.SetPlanetSettings(planetN._planetState);
-                
             }
             else
             {
@@ -142,6 +140,7 @@ public class PlanetController : MonoBehaviour
         }
     }
 */
+    // CR: unused, delete.
     private void GetRandomPosition()
     {
         Vector3 position = new Vector3(Random.Range(-8, 8), Random.Range(-9, 9), 0);
@@ -155,7 +154,7 @@ public class PlanetController : MonoBehaviour
     }
 
 
-
+    // CR: delete
     Vector3 GenerateRandomPosition()
     {
         float randomX = Random.Range(-7, 7);

@@ -5,6 +5,7 @@ using TMPro;
 
 public class EnemyAI : MonoBehaviour
 {
+    // CR: no defaults in the code2
     [SerializeField]
     private float spawnInterval = 5;
 
@@ -52,7 +53,6 @@ public class EnemyAI : MonoBehaviour
             timeSinceLastSpawn = 0;
         }
     }
-
 
     Planet GetRandomPlanet()
     {
