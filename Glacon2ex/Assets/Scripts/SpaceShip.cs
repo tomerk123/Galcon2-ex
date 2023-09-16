@@ -53,14 +53,12 @@ public class SpaceShip : MonoBehaviour
             if (collided.isFrendly && this._spriteRenderer.color == Color.blue)
             {
                 collided.IncreaseNumber();
-                collided._numOfshipText.text = collided._numOfShips.ToString();
                 Destroy(this.gameObject);
             }
 
             else if (collided.isEnemy && this._spriteRenderer.color == Color.red)
             {
                 collided.IncreaseNumber();
-                collided._numOfshipText.text = collided._numOfShips.ToString();
                 Destroy(this.gameObject);
             }
 
@@ -69,10 +67,8 @@ public class SpaceShip : MonoBehaviour
                 GameObject explosion = Instantiate(_explosionVFX, transform.position, Quaternion.identity);
 
                 collided.DecreaseNumber();
-                collided._numOfshipText.text = collided._numOfShips.ToString();
-                if (collided._numOfShips <= 0)
+                if (collided.numOfShips <= 0)
                 {
-                    collided._numOfShips = 1;
                     collided.SetPlanetSettings(collided.GetPlanetStateByShip(this));
                     collided.IncreaseNumber();
                 }
@@ -84,9 +80,8 @@ public class SpaceShip : MonoBehaviour
             {
                 GameObject explosion = Instantiate(_explosionVFX, transform.position, Quaternion.identity);
                 collided.DecreaseNumber();
-                collided._numOfshipText.text = collided._numOfShips.ToString();
 
-                if (collided._numOfShips <= 0)
+                if (collided.numOfShips <= 0)
                 {
                     
                     collided.SetPlanetFreindlyState();
@@ -102,8 +97,7 @@ public class SpaceShip : MonoBehaviour
             {
                 GameObject explosion = Instantiate(_explosionVFX, transform.position, Quaternion.identity);
                 collided.DecreaseNumber();
-                collided._numOfshipText.text = collided._numOfShips.ToString();
-                if (collided._numOfShips <= 0)
+                if (collided.numOfShips <= 0)
                 {
                     
                     collided.SetPlanetEnemyState();
@@ -124,6 +118,7 @@ public class SpaceShip : MonoBehaviour
     }
 
 
+  
 
 
 }

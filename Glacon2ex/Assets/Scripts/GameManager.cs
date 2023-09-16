@@ -9,13 +9,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _loseScreen;
     [SerializeField] private GameObject _winScreen;
 
+    private List<Planet> _selectedPlanets;
+    public List<Planet> selectedPlanets => _selectedPlanets;
 
-
+    // CR: (style): instance
     public static GameManager Instance;
 
     private void Awake()
     {
         Instance = this;
+        _selectedPlanets = new List<Planet>();
     }
     private void Start()
     {
@@ -78,14 +81,28 @@ public class GameManager : MonoBehaviour
 
     void RestartGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
-        
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);   
     }
 
     void QuitGame()
     {
         Application.Quit();
     }
+
+    public void ClearSelection() {
+      _selectedPlanets.Clear();
+    }
+
+    public void Select(Planet selectedPlanet) {
+      foreach (Planet planet in _selectedPlanets) {
+        if (planet.gameObject.GetInstanceID() == selectedPlanet.gameObject.GetInstanceID()) {
+          return;
+        }
+      }
+
+      selectedPlanets.Add(selectedPlanet);
+    }
+
 }
 
 

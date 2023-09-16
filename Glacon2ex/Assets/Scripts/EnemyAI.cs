@@ -5,7 +5,7 @@ using TMPro;
 
 public class EnemyAI : MonoBehaviour
 {
-    // CR: no defaults in the code2
+    // CR: no defaults in the code
     [SerializeField]
     private float spawnInterval = 5;
 
@@ -28,7 +28,7 @@ public class EnemyAI : MonoBehaviour
 
     void Attack()
     {
-        if (_thisPlanet.isEnemy && _thisPlanet._numOfShips > 0)
+        if (_thisPlanet.isEnemy && _thisPlanet.numOfShips > 0)
         {
             _targetPlanet = GetRandomPlanet();
             
@@ -74,9 +74,9 @@ public class EnemyAI : MonoBehaviour
 
     public void DeployEnemyShips(Planet targetPlanet)
     {
-        _thisPlanet._numOfShips = _thisPlanet._numOfShips / 2;
-        _thisPlanet._numOfshipText.text = _thisPlanet._numOfShips.ToString();
-        for (int i = 0; i < _thisPlanet._numOfShips; i++)
+        _thisPlanet.SetNumOfShips(_thisPlanet.numOfShips / 2);
+  
+        for (int i = 0; i < _thisPlanet.numOfShips; i++)
         {
             SpaceShip Ship = Instantiate(_spaceShipPrefab, _spawnPosition.position, Quaternion.identity);
             Ship.GetComponent<SpaceShip>()._targetPlanet = targetPlanet;

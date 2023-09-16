@@ -16,36 +16,41 @@ public enum PlanetState
 public class Planet : MonoBehaviour
 {
     [SerializeField]
-    public TMPro.TextMeshPro _numOfshipText;
+    private TMPro.TextMeshPro _numOfshipText;
     [SerializeField]
-    public int _numOfShips;
+    private int _numOfShips;
     [SerializeField]
-    private float _shipSpwanRate;
+    private float _shipSpawnDelay;
     [SerializeField]
     private Transform _spawnPosition;
     [SerializeField]
     private SpaceShip _shipPrefab;
     
-    // CR: [discuss] state
-    public GameObject SelectionIndicator;
+    [SerializeField] private GameObject _selectionIndicator;
+    private bool _isHovered;
 
     public PlanetState _planetState;
     private SpriteRenderer _spriteRenderer;
-    public bool isClicked = false;
     private float _spwanNewShipTimer;
     private int _startingShips = 100; // CR: no defaults in the code - use [SerializeField]
     private float _size;
 
+    public int numOfShips => _numOfShips;
+
     private void Update()
     {
         ShipSpwanUpdate();
+        if (isClicked || _isHovered) {
+          _selectionIndicator.SetActive(true);
+        } else {
+          _selectionIndicator.SetActive(false);
+        }       
     }
 
     void SpwanNewShipTimer()
     {
-        // CR: [discuss] rate vs time.
         _spwanNewShipTimer += Time.deltaTime;
-        if (_spwanNewShipTimer >= _shipSpwanRate)
+        if (_spwanNewShipTimer >= _shipSpawnDelay)
         {
             _numOfShips++;
             _numOfshipText.text = _numOfShips.ToString();
@@ -67,9 +72,8 @@ public class Planet : MonoBehaviour
     {
         if (isFrendly || isEnemy)
         {
-            // CR: "GetComponent<Transform>().localScale" is slower than "transform.localScale". 
-            _size = GetComponent<Transform>().localScale.x;
-            _shipSpwanRate /= _size; // CR: [discuss]
+            _size = transform.localScale.x;
+            _shipSpawnDelay /= _size;
             _numOfShips = _startingShips;
             _numOfshipText.text = _numOfShips.ToString();
         }
@@ -82,11 +86,10 @@ public class Planet : MonoBehaviour
     }
     public void DeployShips(Planet targetPlanet)
     {
-        // CR: [discuss]
-        int _numShipTmp = _numOfShips / 2;
-        _numOfShips -= _numShipTmp;
+        int numShipsToDeploy = _numOfShips / 2;
+        _numOfShips -= numShipsToDeploy;
         _numOfshipText.text = _numOfShips.ToString();
-        for (int i = 0; i < _numOfShips; i++)
+        for (int i = 0; i < numShipsToDeploy; i++)
         {
             SpaceShip Ship = Instantiate(_shipPrefab, _spawnPosition.position, Quaternion.identity);
             Ship._spriteRenderer.color = this._spriteRenderer.color;
@@ -96,15 +99,12 @@ public class Planet : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        SelectionIndicator.SetActive(true);
+        _isHovered = true;
     }
 
     private void OnMouseExit()
     {
-        if (!isClicked)
-        {
-            SelectionIndicator.SetActive(false);
-        }
+      _isHovered = false;
     }
 
     public void IncreaseNumber()
@@ -117,6 +117,10 @@ public class Planet : MonoBehaviour
     {
         _numOfShips--;
         _numOfshipText.text = _numOfShips.ToString();
+    }
+
+    public void SetNumOfShips(int numOfShips) {
+      _numOfShips = numOfShips;
     }
 
     public bool isFrendly => _planetState == PlanetState.Friendly;
@@ -185,7 +189,17 @@ public class Planet : MonoBehaviour
         }
         return _planetState;
     }
-
+    
+    public bool isClicked {
+      get {
+        foreach (Planet planet in GameManager.Instance.selectedPlanets) {
+          if (this.gameObject.GetInstanceID() == planet.gameObject.GetInstanceID()) {
+            return true;
+          }
+        }
+        return false;
+      }
+    }
 
 
 }

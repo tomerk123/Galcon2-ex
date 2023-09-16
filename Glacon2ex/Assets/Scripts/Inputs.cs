@@ -8,14 +8,6 @@ using Debug = UnityEngine.Debug;
 public class Inputs : MonoBehaviour
 {
 
-    private List<Planet> _selectedPlanets = new List<Planet>();
-    
-
-
-    private void Start()
-    {
-
-    }
     private void Update()
     {
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
@@ -25,17 +17,11 @@ public class Inputs : MonoBehaviour
             
             if (ClickedObject != null && ClickedObject.isFrendly)
             {
-                _selectedPlanets.Add(ClickedObject);
-                ClickedObject.SelectionIndicator.SetActive(true);
-                ClickedObject.isClicked = true;
+                GameManager.Instance.Select(ClickedObject);
             }
             else if (ClickedObject == null)
             {
-                foreach (Planet planet in _selectedPlanets)
-                {
-                    planet.SelectionIndicator.SetActive(false);
-                    planet.isClicked = false;
-                }
+                GameManager.Instance.ClearSelection();
             }
         }
 
@@ -49,19 +35,12 @@ public class Inputs : MonoBehaviour
 
             if (hit.collider.tag == "EnemyPlanet" || hit.collider.tag == "NeutralPlanet" || hit.collider.tag == "FriendlyPlanet")
             {
-
-                if (_selectedPlanets.Count > 0)
+                Planet enemyPlanet = hit.collider.gameObject.GetComponent<Planet>();
+                foreach (Planet planet in GameManager.Instance.selectedPlanets)
                 {
-                    Planet enemyPlanet = hit.collider.gameObject.GetComponent<Planet>();
-                    foreach (Planet planet in _selectedPlanets)
-                    {
-
-                        planet.DeployShips(enemyPlanet);
-                    }
-
+                    planet.DeployShips(enemyPlanet);
                 }
-                _selectedPlanets.Clear();
-
+                GameManager.Instance.ClearSelection();
             }
         }
     }
