@@ -57,8 +57,8 @@ public class EnemyAI : MonoBehaviour
     Planet GetRandomPlanet()
     {
         List<Planet> planets = new List<Planet>();
-        planets.AddRange(GameManager.Instance.GetPlanetList(PlanetState.Friendly));
-        planets.AddRange(GameManager.Instance.GetPlanetList(PlanetState.Neutral));
+        planets.AddRange(GameManager.instance.GetPlanetList(PlanetState.Friendly));
+        planets.AddRange(GameManager.instance.GetPlanetList(PlanetState.Neutral));
         if (planets.Count > 0)
         {
             int randomPlanet = Random.Range(0,planets.Count);

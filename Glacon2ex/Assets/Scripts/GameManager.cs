@@ -12,12 +12,12 @@ public class GameManager : MonoBehaviour
     private List<Planet> _selectedPlanets;
     public List<Planet> selectedPlanets => _selectedPlanets;
 
-    // CR: (style): instance
-    public static GameManager Instance;
+    
+    public static GameManager instance;
 
     private void Awake()
     {
-        Instance = this;
+        instance = this;
         _selectedPlanets = new List<Planet>();
     }
     private void Start()

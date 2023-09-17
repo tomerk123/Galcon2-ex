@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-public static SoundManager Instance;
+public static SoundManager instance;
 
 [SerializeField] private AudioSource _musicSource, _effectSource;
 
 
 void Awake()
 {
-    Instance = this;
+    instance = this;
     DontDestroyOnLoad(gameObject);
 
 }

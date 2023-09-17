@@ -25,14 +25,17 @@ public class Planet : MonoBehaviour
     private Transform _spawnPosition;
     [SerializeField]
     private SpaceShip _shipPrefab;
-    
+
+    [SerializeField]
+    private int _startingShips = 100;
+
     [SerializeField] private GameObject _selectionIndicator;
     private bool _isHovered;
 
     public PlanetState _planetState;
     private SpriteRenderer _spriteRenderer;
     private float _spwanNewShipTimer;
-    private int _startingShips = 100; // CR: no defaults in the code - use [SerializeField]
+    
     private float _size;
 
     public int numOfShips => _numOfShips;
@@ -40,11 +43,14 @@ public class Planet : MonoBehaviour
     private void Update()
     {
         ShipSpwanUpdate();
-        if (isClicked || _isHovered) {
-          _selectionIndicator.SetActive(true);
-        } else {
-          _selectionIndicator.SetActive(false);
-        }       
+        if (isClicked || _isHovered)
+        {
+            _selectionIndicator.SetActive(true);
+        }
+        else
+        {
+            _selectionIndicator.SetActive(false);
+        }
     }
 
     void SpwanNewShipTimer()
@@ -104,7 +110,7 @@ public class Planet : MonoBehaviour
 
     private void OnMouseExit()
     {
-      _isHovered = false;
+        _isHovered = false;
     }
 
     public void IncreaseNumber()
@@ -119,8 +125,9 @@ public class Planet : MonoBehaviour
         _numOfshipText.text = _numOfShips.ToString();
     }
 
-    public void SetNumOfShips(int numOfShips) {
-      _numOfShips = numOfShips;
+    public void SetNumOfShips(int numOfShips)
+    {
+        _numOfShips = numOfShips;
     }
 
     public bool isFrendly => _planetState == PlanetState.Friendly;
@@ -189,16 +196,20 @@ public class Planet : MonoBehaviour
         }
         return _planetState;
     }
-    
-    public bool isClicked {
-      get {
-        foreach (Planet planet in GameManager.Instance.selectedPlanets) {
-          if (this.gameObject.GetInstanceID() == planet.gameObject.GetInstanceID()) {
-            return true;
-          }
+
+    public bool isClicked
+    {
+        get
+        {
+            foreach (Planet planet in GameManager.instance.selectedPlanets)
+            {
+                if (this.gameObject.GetInstanceID() == planet.gameObject.GetInstanceID())
+                {
+                    return true;
+                }
+            }
+            return false;
         }
-        return false;
-      }
     }
 
 

@@ -17,11 +17,11 @@ public class Inputs : MonoBehaviour
             
             if (ClickedObject != null && ClickedObject.isFrendly)
             {
-                GameManager.Instance.Select(ClickedObject);
+                GameManager.instance.Select(ClickedObject);
             }
             else if (ClickedObject == null)
             {
-                GameManager.Instance.ClearSelection();
+                GameManager.instance.ClearSelection();
             }
         }
 
@@ -36,11 +36,11 @@ public class Inputs : MonoBehaviour
             if (hit.collider.tag == "EnemyPlanet" || hit.collider.tag == "NeutralPlanet" || hit.collider.tag == "FriendlyPlanet")
             {
                 Planet enemyPlanet = hit.collider.gameObject.GetComponent<Planet>();
-                foreach (Planet planet in GameManager.Instance.selectedPlanets)
+                foreach (Planet planet in GameManager.instance.selectedPlanets)
                 {
                     planet.DeployShips(enemyPlanet);
                 }
-                GameManager.Instance.ClearSelection();
+                GameManager.instance.ClearSelection();
             }
         }
     }
