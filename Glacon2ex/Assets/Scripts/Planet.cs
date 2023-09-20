@@ -11,8 +11,6 @@ public enum PlanetState
     Neutral
 }
 
-// CR: [discuss] private vs public.
-
 public class Planet : MonoBehaviour
 {
     [SerializeField]
@@ -32,9 +30,11 @@ public class Planet : MonoBehaviour
     [SerializeField] private GameObject _selectionIndicator;
     private bool _isHovered;
 
-    public PlanetState _planetState;
+    private PlanetState _planetState;
     private SpriteRenderer _spriteRenderer;
     private float _spwanNewShipTimer;
+
+    public PlanetState planetState => _planetState;
     
     private float _size;
 
@@ -142,8 +142,8 @@ public class Planet : MonoBehaviour
         }
     }
 
-    public void SetPlanetSettings(PlanetState planetState)
-    {
+    public void SetPlanetState(PlanetState planetState) {
+        _planetState = planetState;
 
         switch (_planetState)
         {
@@ -167,34 +167,6 @@ public class Planet : MonoBehaviour
                 // Set state to neutral for neutral planets
                 break;
         }
-    }
-    public void SetPlanetFreindlyState()
-    {
-        _planetState = PlanetState.Friendly;
-        _spriteRenderer.color = Color.blue;
-        tag = "FriendlyPlanet";
-    }
-
-    public void SetPlanetEnemyState()
-    {
-        _planetState = PlanetState.Enemy;
-        _spriteRenderer.color = Color.red;
-        tag = "EnemyPlanet";
-    }
-
-    public PlanetState GetPlanetStateByShip(SpaceShip ship)
-    {
-        if (ship._spriteRenderer.color == Color.blue)
-        {
-            _planetState = PlanetState.Friendly;
-            SetPlanetSettings(_planetState);
-        }
-        else if (ship._spriteRenderer.color == Color.red)
-        {
-            _planetState = PlanetState.Enemy;
-            SetPlanetSettings(_planetState);
-        }
-        return _planetState;
     }
 
     public bool isClicked

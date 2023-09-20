@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
-
-
+using System;
 
 
 public class SpaceShip : MonoBehaviour
@@ -54,7 +53,7 @@ public class SpaceShip : MonoBehaviour
                 collided.DecreaseNumber();
                 if (collided.numOfShips <= 0)
                 {
-                    collided.SetPlanetSettings(collided.GetPlanetStateByShip(this));
+                    collided.SetPlanetState(GetState());
                     collided.IncreaseNumber();
                 }
                 Destroy(explosion, 1f);
@@ -69,7 +68,7 @@ public class SpaceShip : MonoBehaviour
                 if (collided.numOfShips <= 0)
                 {
                     
-                    collided.SetPlanetFreindlyState();
+                    collided.SetPlanetState(PlanetState.Friendly);
                     collided.IncreaseNumber();
                     GameManager.instance.CheckWinCondition();
                     
@@ -85,7 +84,7 @@ public class SpaceShip : MonoBehaviour
                 if (collided.numOfShips <= 0)
                 {
                     
-                    collided.SetPlanetEnemyState();
+                    collided.SetPlanetState(PlanetState.Enemy);
                     collided.IncreaseNumber();
                     GameManager.instance.CheckWinCondition();
                 }
@@ -103,7 +102,18 @@ public class SpaceShip : MonoBehaviour
     }
 
 
-  
 
+    // blue => friendly;
+    // red => enemy;
+    private PlanetState GetState() {
+        if (_spriteRenderer.color == Color.blue) {
+            return PlanetState.Friendly;
+        }
+        if (_spriteRenderer.color == Color.red) {
+            return PlanetState.Enemy;
+        }
+
+        throw new Exception("Unexpecetd spaceship color");
+    }
 
 }
