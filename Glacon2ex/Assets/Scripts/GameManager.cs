@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
         var Planets = new List<Planet>();
         foreach (Planet planet in FindObjectsOfType<Planet>())
         {
-            if (planet._planetState == state)
+            if (planet.planetState == state)
             {
                 Planets.Add(planet);
             }
@@ -69,12 +69,12 @@ public class GameManager : MonoBehaviour
         if (GetPlanetList(PlanetState.Enemy).Count == 0)
         {
             Win();
-            Debug.Log("win");
+           
         }
         else if (GetPlanetList(PlanetState.Friendly).Count == 0)
         {
             Lose();
-            Debug.Log("lose");
+           
         }
     }
 

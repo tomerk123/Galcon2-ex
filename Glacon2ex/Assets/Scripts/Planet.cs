@@ -11,8 +11,6 @@ public enum PlanetState
     Neutral
 }
 
-// CR: [discuss] private vs public.
-
 public class Planet : MonoBehaviour
 {
     [SerializeField]
@@ -32,10 +30,15 @@ public class Planet : MonoBehaviour
     [SerializeField] private GameObject _selectionIndicator;
     private bool _isHovered;
 
-    public PlanetState _planetState;
+    private PlanetState _planetState;
     private SpriteRenderer _spriteRenderer;
     private float _spwanNewShipTimer;
+
+<<<<<<< HEAD
+=======
+    public PlanetState planetState => _planetState;
     
+>>>>>>> 8964457348f2cd53379549d961aa11be2712cdae
     private float _size;
 
     public int numOfShips => _numOfShips;
@@ -142,46 +145,39 @@ public class Planet : MonoBehaviour
         }
     }
 
-    public void SetPlanetSettings(PlanetState planetState)
-    {
+    public void SetPlanetState(PlanetState planetState) {
+        _planetState = planetState;
 
         switch (_planetState)
         {
             case PlanetState.Enemy:
                 _planetState = PlanetState.Enemy;
                 _spriteRenderer.color = Color.red;
-                // CR:  [discuss] tags
-                tag = "EnemyPlanet";
-                // Set state to enemy for enemy planets
                 break;
             case PlanetState.Friendly:
                 _planetState = PlanetState.Friendly;
                 _spriteRenderer.color = Color.blue;
-                tag = "FriendlyPlanet";
-                // Set state to friendly for friendly planets
                 break;
             case PlanetState.Neutral:
                 _planetState = PlanetState.Neutral;
                 _spriteRenderer.color = Color.gray;
-                tag = "NeutralPlanet";
-                // Set state to neutral for neutral planets
                 break;
         }
     }
+<<<<<<< HEAD
     public void SetPlanetFreindlyState()
     {
         _planetState = PlanetState.Friendly;
         _spriteRenderer.color = Color.blue;
-        tag = "FriendlyPlanet";
+
     }
 
     public void SetPlanetEnemyState()
     {
         _planetState = PlanetState.Enemy;
         _spriteRenderer.color = Color.red;
-        tag = "EnemyPlanet";
-    }
 
+    }
     public PlanetState GetPlanetStateByShip(SpaceShip ship)
     {
         if (ship._spriteRenderer.color == Color.blue)
@@ -196,6 +192,8 @@ public class Planet : MonoBehaviour
         }
         return _planetState;
     }
+=======
+>>>>>>> 8964457348f2cd53379549d961aa11be2712cdae
 
     public bool isClicked
     {

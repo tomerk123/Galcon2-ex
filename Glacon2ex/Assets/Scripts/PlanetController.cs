@@ -37,23 +37,21 @@ public class PlanetController : MonoBehaviour
 
     void InstantiateNuetralPlanets()
     {
-        // CR: [discuss]
         for (int i = 0; i < StartScreen.Instance.NumOfPlanets - 2; i++)
         {
             Vector3 spwanPos = new Vector3(Random.Range(-6.5f, 10f), Random.Range(-6.5f, 10f), 0);
             float randomSize = Random.Range(1f, 3f);
-            float radius = randomSize * 2 / (2 * Mathf.PI);
-            if (!CheckOverLap(spwanPos, radius))
-            {
-                Planet planetN = Instantiate(_planetPrefab, spwanPos, Quaternion.identity);
-                planetN.transform.localScale = new Vector3(randomSize, randomSize, 1);
-                planetN._planetState = PlanetState.Neutral;
-                planetN.SetPlanetSettings(planetN._planetState);
+            float radius = randomSize / Mathf.PI;
+
+            while (CheckOverLap(spwanPos, radius)) {
+                spwanPos = new Vector3(Random.Range(-6.5f, 10f), Random.Range(-6.5f, 10f), 0);
+                randomSize = Random.Range(1f, 3f);
+                radius = randomSize / Mathf.PI;
             }
-            else
-            {
-                i--;
-            }
+
+            Planet planetN = Instantiate(_planetPrefab, spwanPos, Quaternion.identity);
+            planetN.transform.localScale = new Vector3(randomSize, randomSize, 1);
+            planetN.SetPlanetState(PlanetState.Neutral);
         }
     }
 
@@ -68,8 +66,7 @@ public class PlanetController : MonoBehaviour
         }
         Planet planetE = Instantiate(_planetPrefab, spwanPos, Quaternion.identity);
         planetE.transform.localScale = new Vector3(StartSize, StartSize, StartSize);
-        planetE._planetState = PlanetState.Enemy;
-        planetE.SetPlanetEnemyState();
+        planetE.SetPlanetState(PlanetState.Enemy);
        
     }
 
@@ -85,8 +82,7 @@ public class PlanetController : MonoBehaviour
         }
         Planet planetF = Instantiate(_planetPrefab, spwanPos, Quaternion.identity);
         planetF.transform.localScale = new Vector3(StartSize, StartSize, StartSize);
-        planetF._planetState = PlanetState.Friendly;
-        planetF.SetPlanetSettings(planetF._planetState);
+        planetF.SetPlanetState(PlanetState.Friendly);
         
     }
 

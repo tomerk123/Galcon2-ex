@@ -21,8 +21,4 @@ public void PlaySound(AudioClip clip)
   _effectSource.PlayOneShot(clip); 
 }
 
-
-
-
-
 }

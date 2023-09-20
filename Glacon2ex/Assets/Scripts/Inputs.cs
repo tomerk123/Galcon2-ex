@@ -14,7 +14,7 @@ public class Inputs : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Planet ClickedObject = (hit.collider != null) ? hit.collider.gameObject.GetComponent<Planet>() : null;
-            
+
             if (ClickedObject != null && ClickedObject.isFrendly)
             {
                 GameManager.instance.Select(ClickedObject);
@@ -32,8 +32,8 @@ public class Inputs : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-
-            if (hit.collider.tag == "EnemyPlanet" || hit.collider.tag == "NeutralPlanet" || hit.collider.tag == "FriendlyPlanet")
+            Planet planetHit = hit.collider.gameObject.GetComponent<Planet>();
+            if (planetHit.isEnemy || planetHit.isNuetral || planetHit.isFrendly)
             {
                 Planet enemyPlanet = hit.collider.gameObject.GetComponent<Planet>();
                 foreach (Planet planet in GameManager.instance.selectedPlanets)
