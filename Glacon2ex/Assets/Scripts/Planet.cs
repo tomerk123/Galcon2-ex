@@ -34,11 +34,8 @@ public class Planet : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private float _spwanNewShipTimer;
 
-<<<<<<< HEAD
-=======
     public PlanetState planetState => _planetState;
     
->>>>>>> 8964457348f2cd53379549d961aa11be2712cdae
     private float _size;
 
     public int numOfShips => _numOfShips;
@@ -164,36 +161,6 @@ public class Planet : MonoBehaviour
                 break;
         }
     }
-<<<<<<< HEAD
-    public void SetPlanetFreindlyState()
-    {
-        _planetState = PlanetState.Friendly;
-        _spriteRenderer.color = Color.blue;
-
-    }
-
-    public void SetPlanetEnemyState()
-    {
-        _planetState = PlanetState.Enemy;
-        _spriteRenderer.color = Color.red;
-
-    }
-    public PlanetState GetPlanetStateByShip(SpaceShip ship)
-    {
-        if (ship._spriteRenderer.color == Color.blue)
-        {
-            _planetState = PlanetState.Friendly;
-            SetPlanetSettings(_planetState);
-        }
-        else if (ship._spriteRenderer.color == Color.red)
-        {
-            _planetState = PlanetState.Enemy;
-            SetPlanetSettings(_planetState);
-        }
-        return _planetState;
-    }
-=======
->>>>>>> 8964457348f2cd53379549d961aa11be2712cdae
 
     public bool isClicked
     {
