@@ -8,12 +8,14 @@ public static SoundManager instance;
 
 [SerializeField] private AudioSource _musicSource, _effectSource;
 
-// CR: [discuss] important to destroy if an instance already exists.
 void Awake()
 {
-    instance = this;
-    DontDestroyOnLoad(gameObject);
-
+    if (instance == null) {
+      instance = this;
+      DontDestroyOnLoad(gameObject);
+    } else {
+      Destroy(this);
+    }
 }
 
 public void PlaySound(AudioClip clip)

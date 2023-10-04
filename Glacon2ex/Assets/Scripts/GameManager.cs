@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // CR: in the "BuildSettings", change the "MainMenu" scene to be first (so the game works outside of the editor)
-// CR: [discuss] Same as in Shay's game, fix the issue of selected planets being taken over.
 
 public class GameManager : MonoBehaviour
 {
@@ -103,6 +102,15 @@ public class GameManager : MonoBehaviour
       }
 
       selectedPlanets.Add(selectedPlanet);
+    }
+
+    public void Unselect(Planet planet) {
+        for (int i = 0; i < _selectedPlanets.Count; i++) {
+            if (planet.gameObject.GetInstanceID() == _selectedPlanets[i].gameObject.GetInstanceID()) {
+                _selectedPlanets.RemoveAt(i);
+                return;
+            }
+        }
     }
 
 }

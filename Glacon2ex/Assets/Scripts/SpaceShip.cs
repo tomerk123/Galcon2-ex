@@ -8,40 +8,57 @@ using System;
 public class SpaceShip : MonoBehaviour
 {
 
-    public Planet _targetPlanet;
-    public SpriteRenderer _spriteRenderer;
+    private Planet _targetPlanet;
+    private SpriteRenderer _spriteRenderer;
     [SerializeField] private GameObject _explosionVFX;
 
+    private PlanetState _state;
     [SerializeField] private float _speed = 8f; // CR: no defaults in the code - put the '8' in the SpaceShip prefab.
-
+    
     private void Update()
     {
         Movement();
     }
 
-    private void Awake()
-    {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _spriteRenderer.color = this._spriteRenderer.color; // CR: doesn't do anything - delete.
-    }
+    public void Init(PlanetState state, Planet targetPlanet) {
+         _spriteRenderer = GetComponent<SpriteRenderer>();
 
-    private void Start()
-    {
+        _state = state;
+        _targetPlanet = targetPlanet;
 
+        switch (state) {
+            case PlanetState.Friendly:
+                _spriteRenderer.color = Color.blue;
+                break;
+            case PlanetState.Enemy:
+                _spriteRenderer.color = Color.red;
+                break;
+            case PlanetState.Neutral:
+                _spriteRenderer.color = Color.gray;
+                break;
+        }
     }
+    
+    // CR: you can simplify with something like
+    // if _state == cllided.state {
+    //    collided.IncreaseShips();
+    // } 
+    // else {
+    //     collided.DecreaseShips();
+    // }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         Planet collided = other.GetComponent<Planet>();
         if (collided == _targetPlanet)
         {
-            if (collided.isFrendly && this._spriteRenderer.color == Color.blue)
+            if (collided.isFrendly && _state == PlanetState.Friendly)
             {
                 collided.IncreaseNumber();
                 Destroy(this.gameObject);
             }
 
-            else if (collided.isEnemy && this._spriteRenderer.color == Color.red)
+            else if (collided.isEnemy && _state == PlanetState.Enemy)
             {
                 collided.IncreaseNumber();
                 Destroy(this.gameObject);
@@ -54,14 +71,14 @@ public class SpaceShip : MonoBehaviour
                 collided.DecreaseNumber();
                 if (collided.numOfShips <= 0)
                 {
-                    collided.SetPlanetState(GetState());
+                    collided.SetPlanetState(_state);
                     collided.IncreaseNumber();
                 }
                 Destroy(explosion, 1f);
                 Destroy(this.gameObject);
             }
 
-            if (collided.isEnemy && _spriteRenderer.color == Color.blue)
+            if (collided.isEnemy && _state == PlanetState.Friendly)
             {
                 GameObject explosion = Instantiate(_explosionVFX, transform.position, Quaternion.identity);
                 collided.DecreaseNumber();
@@ -78,7 +95,7 @@ public class SpaceShip : MonoBehaviour
                 Destroy(this.gameObject);
             }
 
-            if (collided.isFrendly && this._spriteRenderer.color == Color.red)
+            if (collided.isFrendly && _state == PlanetState.Enemy)
             {
                 GameObject explosion = Instantiate(_explosionVFX, transform.position, Quaternion.identity);
                 collided.DecreaseNumber();
@@ -88,6 +105,7 @@ public class SpaceShip : MonoBehaviour
                     collided.SetPlanetState(PlanetState.Enemy);
                     collided.IncreaseNumber();
                     GameManager.instance.CheckWinCondition();
+                    GameManager.instance.Unselect(collided);
                 }
                 Destroy(explosion, 1f);
                 Destroy(this.gameObject);
@@ -102,20 +120,5 @@ public class SpaceShip : MonoBehaviour
         transform.up = _targetPlanet.transform.position - transform.position;
     }
 
-
-
-    // CR: [discuss]
-    // blue => friendly;
-    // red => enemy;
-    private PlanetState GetState() {
-        if (_spriteRenderer.color == Color.blue) {
-            return PlanetState.Friendly;
-        }
-        if (_spriteRenderer.color == Color.red) {
-            return PlanetState.Enemy;
-        }
-
-        throw new Exception("Unexpecetd spaceship color");
-    }
 
 }

@@ -18,7 +18,7 @@ public class Planet : MonoBehaviour
     [SerializeField]
     private int _numOfShips;
     [SerializeField]
-    private float _shipSpawnDelay;
+    private float _baseShipSpawnDelay;
     [SerializeField]
     private Transform _spawnPosition;
     [SerializeField]
@@ -35,8 +35,6 @@ public class Planet : MonoBehaviour
     private float _spwanNewShipTimer;
 
     public PlanetState planetState => _planetState;
-    
-    private float _size;
 
     public int numOfShips => _numOfShips;
 
@@ -56,7 +54,7 @@ public class Planet : MonoBehaviour
     void SpwanNewShipTimer()
     {
         _spwanNewShipTimer += Time.deltaTime;
-        if (_spwanNewShipTimer >= _shipSpawnDelay)
+        if (_spwanNewShipTimer >= shipSpawnDelay)
         {
             _numOfShips++;
             _numOfshipText.text = _numOfShips.ToString();
@@ -69,28 +67,22 @@ public class Planet : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    void Start()
-    {
-        ShipUpdate();
-    }
+    private float size => transform.localScale.x;
+    private float shipSpawnDelay => _baseShipSpawnDelay / size;
 
-    // CR: [discuss] single source of truth
-    void ShipUpdate()
+    void Start()
     {
         if (isFrendly || isEnemy)
         {
-            _size = transform.localScale.x;
-            _shipSpawnDelay /= _size;
             _numOfShips = _startingShips;
-            _numOfshipText.text = _numOfShips.ToString();
         }
         else
         {
             _numOfShips = Random.Range(10, 25);
-            _numOfshipText.text = _numOfShips.ToString();
         }
-
+        _numOfshipText.text = _numOfShips.ToString();
     }
+
     public void DeployShips(Planet targetPlanet)
     {
         int numShipsToDeploy = _numOfShips / 2;
@@ -99,11 +91,8 @@ public class Planet : MonoBehaviour
         for (int i = 0; i < numShipsToDeploy; i++)
         {
             // CR: rename Ship -> ship
-            // CR: [discuss] _spriteRenderer and _targetPlanet shouldn't be public - replace with
-            //     a public Init function.
             SpaceShip Ship = Instantiate(_shipPrefab, _spawnPosition.position, Quaternion.identity);
-            Ship._spriteRenderer.color = this._spriteRenderer.color;
-            Ship.GetComponent<SpaceShip>()._targetPlanet = targetPlanet;
+            Ship.Init(_planetState, targetPlanet);
         }
     }
 

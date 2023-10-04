@@ -391,11 +391,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _numOfshipText: {fileID: 350232635}
   _numOfShips: 0
-  _shipSpawnDelay: 0.5
+  _baseShipSpawnDelay: 0.5
   _spawnPosition: {fileID: 7675404446657856131}
   _shipPrefab: {fileID: -5135205141277966637, guid: 16cbbdb988d42df448999fcc41db098d, type: 3}
+  _startingShips: 100
   _selectionIndicator: {fileID: 1068049802}
-  _planetState: 2
 --- !u!58 &7069908393358992921
 CircleCollider2D:
   m_ObjectHideFlags: 0

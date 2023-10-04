@@ -34,7 +34,7 @@ public class EnemyAI : MonoBehaviour
             
             if (_targetPlanet != null)
             {
-                DeployEnemyShips(_targetPlanet);
+                _thisPlanet.DeployShips(_targetPlanet);
             }
         }
      
@@ -71,18 +71,6 @@ public class EnemyAI : MonoBehaviour
     }
 
  
-    // CR: just call _thisPlanet.DeployShips :) 
-    public void DeployEnemyShips(Planet targetPlanet)
-    {
-        _thisPlanet.SetNumOfShips(_thisPlanet.numOfShips / 2);
-  
-        for (int i = 0; i < _thisPlanet.numOfShips; i++)
-        {
-            SpaceShip Ship = Instantiate(_spaceShipPrefab, _spawnPosition.position, Quaternion.identity);
-            Ship.GetComponent<SpaceShip>()._targetPlanet = targetPlanet;
-            Ship._spriteRenderer.color = Color.red;
-        }
-    }
 
 
 }
