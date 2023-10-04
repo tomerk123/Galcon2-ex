@@ -35,6 +35,7 @@ public class PlanetController : MonoBehaviour
     {
     }
 
+    // CR: [discuss] radius and pi
     void InstantiateNuetralPlanets()
     {
         for (int i = 0; i < StartScreen.Instance.NumOfPlanets - 2; i++)

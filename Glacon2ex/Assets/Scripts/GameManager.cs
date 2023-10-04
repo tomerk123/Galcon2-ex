@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// CR: in the "BuildSettings", change the "MainMenu" scene to be first (so the game works outside of the editor)
+// CR: [discuss] Same as in Shay's game, fix the issue of selected planets being taken over.
+
 public class GameManager : MonoBehaviour
 {
     [Header("Win/Lose Screens")]
@@ -12,7 +15,6 @@ public class GameManager : MonoBehaviour
     private List<Planet> _selectedPlanets;
     public List<Planet> selectedPlanets => _selectedPlanets;
 
-    
     public static GameManager instance;
 
     private void Awake()

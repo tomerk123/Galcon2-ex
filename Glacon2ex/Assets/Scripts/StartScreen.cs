@@ -6,8 +6,8 @@ public class StartScreen : MonoBehaviour
 {
     private static StartScreen _instance;
 
-    public int NumOfPlanets { get; private set; }
-    public static StartScreen Instance => _instance;
+    public int NumOfPlanets { get; private set; } // CR: [coding conventions] rename 'numOfPlanets'.
+    public static StartScreen Instance => _instance; // CR: [coding conventions] rename 'instance'.
 
     private void Awake()
     {

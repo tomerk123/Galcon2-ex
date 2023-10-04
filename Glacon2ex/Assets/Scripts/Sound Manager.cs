@@ -8,7 +8,7 @@ public static SoundManager instance;
 
 [SerializeField] private AudioSource _musicSource, _effectSource;
 
-
+// CR: [discuss] important to destroy if an instance already exists.
 void Awake()
 {
     instance = this;

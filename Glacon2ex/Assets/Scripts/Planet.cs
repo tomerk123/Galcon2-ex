@@ -25,7 +25,7 @@ public class Planet : MonoBehaviour
     private SpaceShip _shipPrefab;
 
     [SerializeField]
-    private int _startingShips = 100;
+    private int _startingShips = 100; // CR: no defaults in the code
 
     [SerializeField] private GameObject _selectionIndicator;
     private bool _isHovered;
@@ -74,6 +74,7 @@ public class Planet : MonoBehaviour
         ShipUpdate();
     }
 
+    // CR: [discuss] single source of truth
     void ShipUpdate()
     {
         if (isFrendly || isEnemy)
@@ -97,6 +98,9 @@ public class Planet : MonoBehaviour
         _numOfshipText.text = _numOfShips.ToString();
         for (int i = 0; i < numShipsToDeploy; i++)
         {
+            // CR: rename Ship -> ship
+            // CR: [discuss] _spriteRenderer and _targetPlanet shouldn't be public - replace with
+            //     a public Init function.
             SpaceShip Ship = Instantiate(_shipPrefab, _spawnPosition.position, Quaternion.identity);
             Ship._spriteRenderer.color = this._spriteRenderer.color;
             Ship.GetComponent<SpaceShip>()._targetPlanet = targetPlanet;
@@ -148,7 +152,7 @@ public class Planet : MonoBehaviour
         switch (_planetState)
         {
             case PlanetState.Enemy:
-                _planetState = PlanetState.Enemy;
+                _planetState = PlanetState.Enemy; // CR: delete this (already done in "_planetState = planetState"). same below.
                 _spriteRenderer.color = Color.red;
                 break;
             case PlanetState.Friendly:

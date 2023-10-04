@@ -71,7 +71,7 @@ public class EnemyAI : MonoBehaviour
     }
 
  
-
+    // CR: just call _thisPlanet.DeployShips :) 
     public void DeployEnemyShips(Planet targetPlanet)
     {
         _thisPlanet.SetNumOfShips(_thisPlanet.numOfShips / 2);

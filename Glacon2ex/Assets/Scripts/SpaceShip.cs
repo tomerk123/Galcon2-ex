@@ -12,7 +12,7 @@ public class SpaceShip : MonoBehaviour
     public SpriteRenderer _spriteRenderer;
     [SerializeField] private GameObject _explosionVFX;
 
-    [SerializeField] private float _speed = 8f;
+    [SerializeField] private float _speed = 8f; // CR: no defaults in the code - put the '8' in the SpaceShip prefab.
 
     private void Update()
     {
@@ -22,8 +22,9 @@ public class SpaceShip : MonoBehaviour
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _spriteRenderer.color = this._spriteRenderer.color;
+        _spriteRenderer.color = this._spriteRenderer.color; // CR: doesn't do anything - delete.
     }
+
     private void Start()
     {
 
@@ -103,6 +104,7 @@ public class SpaceShip : MonoBehaviour
 
 
 
+    // CR: [discuss]
     // blue => friendly;
     // red => enemy;
     private PlanetState GetState() {
